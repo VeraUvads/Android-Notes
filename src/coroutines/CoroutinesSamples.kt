@@ -14,3 +14,13 @@ inline fun <T> Result<T>.onFailureSafe(
     exceptionOrNull()?.let { if (it.isCancelException) throw it else action(it) }
     return this
 }
+
+fun doSmth() {
+    runCatching {
+        // suspend
+    }.onFailureSafe {
+        println("error: $it")
+    }
+}
+
+
