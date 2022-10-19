@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 /**1) If we run this code on a quad-core processor, what should we see? **/
+/**1) Если мы запустим этот код на четырех ядерном процессоре, что интересного мы увидим? **/
 class Dispatcher1 {
     init {
         start(Dispatchers.Default)
@@ -22,6 +23,7 @@ class Dispatcher1 {
 }
 
 /**2) What is wrong with this code? **/
+/**2) Какая ошибка допущена? **/
 class Deferred1 {
     init {
         start()
@@ -42,9 +44,3 @@ class Deferred1 {
     }
 
 }
-
-fun main() {
-    Deferred1()
-}
-
-

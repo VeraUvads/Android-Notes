@@ -180,20 +180,6 @@ val results: List<String> = listOf<Deferred<String>>().awaitAll()
 
 ***
 
-#### What is the difference between deferreds.map { it.await() } and deferreds.awaitAll().
-
-*AwaitAll* is **not** equivalent to
-
- ```Kotlin
-deferreds.map { it.await() } // it is NOT AwaitAll
-```
-
-*this code* fails only when it sequentially gets to wait for the failing deferred;
-
-*awaitAll* - fails immediately as any of the deferreds fail.
-
-***
-
 #### What is CoroutineStart? Which types do you know?
 
  ```Kotlin

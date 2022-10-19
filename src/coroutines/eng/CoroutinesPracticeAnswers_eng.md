@@ -7,4 +7,4 @@ Coroutines 0,1,2,3 will start immediately. All threads are busy.
 Coroutines 4,5 coroutines will be launched when two the previous one finish their work and release threads.
 
 
-#### 2) What is wrong with Deferred1? 
+#### 2) What is wrong with Deferred1?
