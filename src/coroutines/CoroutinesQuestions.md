@@ -263,11 +263,19 @@ The coroutine context includes a coroutine dispatcher that determines what threa
 The coroutine dispatcher can confine coroutine execution to a specific thread, 
 dispatch it to a thread pool, or let it run unconfined.
 
-*Dispatchers.Default* - 
+*Dispatchers.Default* - It uses a common pool of shared background threads. It is backed by a shared pool 
+of threads on JVM. By default, the maximum number of threads used by this dispatcher is equal 
+to the number of CPU cores, but is at least two. Using for intensive computing.
 
-*Dispatchers.IO* - 
+*Dispatchers.IO* - uses a shared pool of on-demand created threads and is designed for blocking operations.
+The thread limit is 64 (or more if processor cores are more than 64). Using for write/read/network work.
 
 *Dispatchers.Unconfined* - 
+
+***
+#### Why is Default not suitable for IO operations?
+
+
 
 ***
 #### How to create private thread pool?
