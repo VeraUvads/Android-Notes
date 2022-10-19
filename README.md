@@ -12,7 +12,7 @@ Full questions list for Coroutines, Compose, Common Android topics
 ##### [CoroutinesPracticeAnswers](src/coroutines/eng/CoroutinesPracticeAnswers_eng.md)
 
 ### Compose
-##### [ComposeTheory](src/compose/eng/ComposeTheory_ru.md)
+##### [ComposeTheory](src/compose/eng/ComposeTheory_eng.md)
 
 ### Android
 ##### [AndroidTheory](src/common_android/eng/CommonAndroid_eng.md)
@@ -31,7 +31,7 @@ RUS
 ##### [Ответы по практике](src/coroutines/eng/CoroutinesPracticeAnswers_eng.md)
 
 ### Compose
-##### [Теория Compose](src/compose/eng/ComposeTheory_ru.md)
+##### [Теория Compose](src/compose/eng/ComposeTheory_eng.md)
 
 ### Android
 ##### [Теория андроид](src/common_android/eng/CommonAndroid_eng.md)

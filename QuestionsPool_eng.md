@@ -22,7 +22,7 @@
 1) Is there a limit on the size of the bundle?
 2) What is the Binder transaction?
 
-### [Compose](src/compose/eng/ComposeTheory_ru.md)
+### [Compose](src/compose/eng/ComposeTheory_eng.md)
 1) What is recomposition?
 2) *remember*, *remember(key)*, *rememberSaveable*, *remember{derivedStateOf()}* difference
 3) What is **SideEffect** for?
