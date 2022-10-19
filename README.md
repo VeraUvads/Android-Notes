@@ -1,6 +1,6 @@
 # Android-Notes
 
-### Coroutines
+### [Coroutines](src/coroutines/CoroutinesQuestions.md)
 
 1) Difference between a "coroutine" and a "thread"?
 2) What are the main components of coroutines? Describe their role
@@ -16,3 +16,15 @@
 12) What is CoroutineStart? Which types do you know?
 13) How to cancel coroutine? What is ensureActive?
 14) Hot to put custom data to CoroutineContext?
+
+
+### [Common](src/common_android/CommonAndroid.md)
+
+1) Is there a limit on the size of the bundle?
+2) What is the Binder transaction?
+
+### [Compose](src/compose/ComposeQuestions.md)
+1) remember, remember(key), rememberSaveable, remember { derivedStateOf() } difference
+2) 
+
+
