@@ -13,19 +13,21 @@
 
 #### What are the main components of coroutines? Describe their role
 
-*Job, Context, Dispatcher и CoroutineScope*
+*Job, Context, Dispatcher, Continuation и CoroutineScope*
 
 *Job* - Stores the state of the coroutine: active / canceled / completed. These states change as the coroutine runs. But
 we also use coroutine state products on their own: to cancel the coroutine or start deferring the coroutine. Jobs can be
 arranged into parent-child hierarchies where cancellation of a parent leads to immediate cancellation of all its
 children recursively.
 
-*CoroutineContext* - collection of unique Key-Element values. Should contain an instance of a job to enforce structured concurrency.
+*CoroutineContext* - collection of unique Key-Element values. Should contain an instance of a job to enforce structured
+concurrency.
+
+*Dispatcher* - determines what thread or threads the coroutine uses for execution. The coroutine dispatcher can confine coroutine execution to a specific thread,
+dispatch it to a thread pool, or let it run unconfined.
 
 [//]: # (TODO)
-*Dispatcher* -
-
-*CoroutineScope* - 
+*CoroutineScope* -
 
 *Continuation* -
 
@@ -35,8 +37,8 @@ children recursively.
 
 [//]: # (TODO)
 
-*CoroutineScope* store *CoroutineContext*. CoroutineContext it is a map with different objects, including *Job*. *Job*
-implements CoroutineContext.Element
+*CoroutineScope* store *CoroutineContext*. CoroutineContext it is a map with different objects that implement
+CoroutineContext.Element. As example: Job, Dispatched,
 
 ***
 
@@ -102,6 +104,7 @@ launch {
 #### How continuation.resume() set parameters to next continuation?
 
 [//]: # (TODO поправить ошибку в логике)
+
  ```Kotlin
 launch {
     val param = buildParam()
@@ -239,8 +242,8 @@ job.cancel()
 
 #### How to put custom data to CoroutineContext
 
-To coroutine Context we can put CoroutineContext.Element implementation.
-AbstractCoroutineContextElement - base class for CoroutineContext.Element implementations.
+To coroutine Context we can put CoroutineContext.Element implementation. AbstractCoroutineContextElement - base class
+for CoroutineContext.Element implementations.
 
  ```Kotlin
 data class SharedData(
@@ -253,3 +256,29 @@ data class SharedData(
 val scope = CoroutineScope(Job() + Dispatchers.Default + SharedData("I have a secret for you"))
  ```
 
+***
+#### What is CoroutineDispatcher? Which types do you know?
+
+The coroutine context includes a coroutine dispatcher that determines what thread or threads the coroutine uses for execution. 
+The coroutine dispatcher can confine coroutine execution to a specific thread, 
+dispatch it to a thread pool, or let it run unconfined.
+
+*Dispatchers.Default* - 
+
+*Dispatchers.IO* - 
+
+*Dispatchers.Unconfined* - 
+
+***
+#### How to create private thread pool?
+
+[//]: # (TODO)
+Private thread pools can be created with *newSingleThreadContext* and *newFixedThreadPoolContext*.
+
+***
+#### What is ContinuationInterceptor?
+
+[//]: # (TODO)
+
+
+***

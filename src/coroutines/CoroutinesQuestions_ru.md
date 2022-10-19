@@ -251,4 +251,3 @@ data class SharedData(
 //then scope could be created as
 val scope = CoroutineScope(Job() + Dispatchers.Default + SharedData("I have a secret for you"))
  ```
-
