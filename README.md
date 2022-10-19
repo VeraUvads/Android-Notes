@@ -15,7 +15,7 @@
 11) What is the difference between **deferreds.map { it.await() }** and **deferreds.awaitAll()**.
 12) What is **CoroutineStart**? Which types do you know?
 13) How to cancel coroutine? What is ensureActive?
-14) Hot to put custom data to *CoroutineContext*?
+14) How to put custom data to *CoroutineContext*?
 
 ### [Common](src/common_android/CommonAndroid.md)
 
@@ -28,5 +28,6 @@
 3) What is **SideEffect** for?
 4) Effect types
 5) State types
+6) What is the **@Stable** annotation for?
 
 

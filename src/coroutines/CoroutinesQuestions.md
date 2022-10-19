@@ -237,7 +237,7 @@ job.cancel()
 
 ***
 
-#### Hot to put custom data to CoroutineContext
+#### How to put custom data to CoroutineContext
 
 To coroutine Context we can put CoroutineContext.Element implementation.
 AbstractCoroutineContextElement - base class for CoroutineContext.Element implementations.
