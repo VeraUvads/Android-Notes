@@ -6,5 +6,14 @@ to the number of CPU cores.
 Coroutines 0,1,2,3 will start immediately. All threads are busy. 
 Coroutines 4,5 coroutines will be launched when two the previous one finish their work and release threads.
 
-
 #### 2) What is wrong with Deferred1?
+*deferredList.map { it.await() }* not the same with *deferredList.awaitAll()*
+
+The code with *map* will suspend the coroutine on each call and execute all the functions in sequence.
+*awaitAll* will do all Deferreds independently.
+
+#### 3) What is wrong with Lifecycle1?
+When the activity is destroyed (as example, when we rotate the screen), lifecycle scope will be cancelled.
+We will lose result of our API call.
+To resolve this problem, we should call our api from *viewModelScope*. It will survive after rotation,
+and we will receive our data.
