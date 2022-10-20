@@ -1,6 +1,8 @@
 package coroutines
 
 import kotlinx.coroutines.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
 // Answers here ( https://github.com/VeraUvads/Android-Notes/blob/18127f03c878f8717f844c4809e0308fd192c7b6/src/coroutines/eng/CoroutinesPracticeAnswers_eng.md )
@@ -13,17 +15,29 @@ class Dispatcher1 {
     init {
         start(Dispatchers.Default)
         start(Dispatchers.IO)
+        start(Executors.newSingleThreadExecutor().asCoroutineDispatcher())
     }
 
-    private fun start(coroutineContext: CoroutineContext) = runBlocking() {
+    private fun start(dispatcher: CoroutineContext) = runBlocking {
+        val jobList = mutableListOf<Job>()
+        val scope = CoroutineScope(
+            dispatcher
+        )
+
         repeat(6) {
-            launch(coroutineContext) {
+            val job = scope.launch {
                 println("coroutine $it, start")
-                delay(100)
+                TimeUnit.MILLISECONDS.sleep(100)
                 println("coroutine $it, end")
             }
+            jobList.add(job)
         }
+        jobList.joinAll()
     }
+}
+
+fun main() {
+    Dispatcher1()
 }
 
 /**2) What is wrong with this code? **/
@@ -49,8 +63,8 @@ class Deferred1 {
 
 }
 
-/**3) What is wrong with this code? **/
-/**3) Какая ошибка допущена? **/
+/**3) Fix the code **/
+/**3) Исправьте код **/
 class Lifecycle1 {
     init {
         MainActivity()
@@ -58,12 +72,12 @@ class Lifecycle1 {
 
 
     internal class MainActivity { // trust me, this is real Activity
-        private val lifecycleScope = CoroutineScope(Job())
-        private val viewModel = ViewModel()
-
         init {
             onCreate()
         }
+
+        private val lifecycleScope = CoroutineScope(Dispatchers.Default)
+        private val viewModel = ViewModel()
 
         private fun onCreate() {
             onClick {
@@ -73,7 +87,6 @@ class Lifecycle1 {
             }
         }
 
-
         // ignore that fun
         private fun onClick(action: suspend () -> Deferred<Unit>) = runBlocking {
             action().await()
@@ -82,16 +95,12 @@ class Lifecycle1 {
 
 
     internal class ViewModel {
+        private val viewModelScope = CoroutineScope(Dispatchers.Default)
         suspend fun callApi() {
             println("Job started")
             delay(2000)
             println("Job finished")
         }
     }
-
 }
 
-
-fun main() {
-    Lifecycle1()
-}
