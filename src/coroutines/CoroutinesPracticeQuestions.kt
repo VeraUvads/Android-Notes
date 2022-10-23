@@ -18,7 +18,7 @@ class Dispatcher1 {
         start(Executors.newSingleThreadExecutor().asCoroutineDispatcher())
     }
 
-    private fun start(dispatcher: CoroutineContext) = runBlocking {
+    private fun start(dispatcher: CoroutineDispatcher) = runBlocking {
         val jobList = mutableListOf<Job>()
         val scope = CoroutineScope(
             dispatcher
@@ -26,18 +26,14 @@ class Dispatcher1 {
 
         repeat(6) {
             val job = scope.launch {
-                println("coroutine $it, start")
+                println("coroutine $it, start $dispatcher")
                 TimeUnit.MILLISECONDS.sleep(100)
-                println("coroutine $it, end")
+                println("coroutine $it, end $dispatcher")
             }
             jobList.add(job)
         }
         jobList.joinAll()
     }
-}
-
-fun main() {
-    Dispatcher1()
 }
 
 /**2) What is wrong with this code? **/
@@ -103,4 +99,5 @@ class Lifecycle1 {
         }
     }
 }
+
 

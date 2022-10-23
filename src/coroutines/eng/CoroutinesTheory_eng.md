@@ -38,7 +38,7 @@ dispatch it to a thread pool, or let it run unconfined.
 [//]: # (TODO)
 
 *CoroutineScope* store *CoroutineContext*. CoroutineContext it is a map with different objects that implement
-CoroutineContext.Element. As example: Job, Dispatched,
+CoroutineContext.Element. As example: Job, Dispatcher,
 
 ***
 
@@ -146,13 +146,21 @@ thread at the entry point of the *await()*.
 
 #### Job types
 
-[//]: # (TODO)
 
-*Job* -
+*Job* - Creates a job object in an active state. A failure of any child of this job immediately causes 
+this job to fail, too, and cancels the rest of its children.
 
-*Deffered* -
+*SupervisorJob* -To handle children failure independently of each other use SupervisorJob.
+Children of a supervisor job can fail independently of each other. If parent job is specified, 
+then this supervisor job becomes a child job of its parent and is cancelled when its parent fails or is cancelled. 
+All this supervisor's children are cancelled in this case, too. The invocation of cancel with exception 
+(other than CancellationException) on this supervisor job also cancels parent.
 
-*SupervisorJob* -
+*Deferred* - it is a Job with a result. Deferred has the same state machine as the Job with additional convenience 
+methods to retrieve the successful or failed result of the computation that was carried out. 
+The result of the deferred is available when it is completed and can be retrieved by await method, 
+which throws an exception if the deferred had failed.
+
 
 ***
 
@@ -256,7 +264,11 @@ to the number of CPU cores, but is at least two. Using for intensive computing.
 *Dispatchers.IO* - uses a shared pool of on-demand created threads and is designed for blocking operations.
 The thread limit is 64 (or more if processor cores are more than 64). Using for write/read/network work.
 
-*Dispatchers.Unconfined* - 
+*Dispatchers.Unconfined* - is not confined to any specific thread. It executes the initial continuation 
+of a coroutine in the current call-frame and lets the coroutine resume in whatever thread that is used 
+by the corresponding suspending function, without mandating any specific threading policy.
+Nested coroutines launched in this dispatcher form an event-loop to avoid stack overflows;
+
 
 ***
 #### Why is Default not suitable for IO operations?
@@ -283,3 +295,14 @@ Private thread pools can be created with *newSingleThreadContext* and *newFixedT
 
 
 ***
+
+#### What is Flow? When we have to use it?
+
+[//]: # (TODO)
+
+
+***
+
+#### Which coroutines will be cancelled?
+![img.png](cancellation.png)
+
