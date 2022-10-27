@@ -59,6 +59,7 @@ class Deferred1 {
 
 }
 
+
 /**3) Fix the code **/
 /**3) Исправьте код **/
 class Lifecycle1 {
@@ -68,27 +69,20 @@ class Lifecycle1 {
 
 
     internal class MainActivity { // trust me, this is real Activity
-        init {
-            onCreate()
-        }
+        init { onCreate() }
 
         private val lifecycleScope = CoroutineScope(Dispatchers.Default)
         private val viewModel = ViewModel()
-
         private fun onCreate() {
             onClick {
-                lifecycleScope.async {
-                    viewModel.callApi()
-                }
+                lifecycleScope.async { viewModel.callApi() }
             }
         }
-
         // ignore that fun
         private fun onClick(action: suspend () -> Deferred<Unit>) = runBlocking {
             action().await()
         }
     }
-
 
     internal class ViewModel {
         private val viewModelScope = CoroutineScope(Dispatchers.Default)

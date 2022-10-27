@@ -79,7 +79,7 @@ CoroutineExceptionHandler got java.lang.AssertionError
 ***
 
 #### What is suspension point? How coroutines state machine will divide this code?
-
+!!!
 [//]: # (TODO)
 
 [//]: # (Suspension points are points in code which either end your program early &#40;mostly bad paths in programs&#41;, or which start some work on the side, in another routine which is suspended, ultimately notifying you of the end result, and allowing you to continue where you left off.)
@@ -102,7 +102,7 @@ launch {
 ***
 
 #### How continuation.resume() set parameters to next continuation?
-
+!!!
 [//]: # (TODO поправить ошибку в логике)
 
  ```Kotlin
@@ -145,7 +145,7 @@ thread at the entry point of the *await()*.
 ***
 
 #### Job types
-
+!!!
 
 *Job* - Creates a job object in an active state. A failure of any child of this job immediately causes 
 this job to fail, too, and cancels the rest of its children.
@@ -295,3 +295,14 @@ Private thread pools can be created with *newSingleThreadContext* and *newFixedT
 
 
 ***
+
+#### What is Flow? When we have to use it?
+
+[//]: # (TODO)
+
+
+***
+
+#### Which coroutines will be cancelled?
+![img.png](cancellation.png)
+
