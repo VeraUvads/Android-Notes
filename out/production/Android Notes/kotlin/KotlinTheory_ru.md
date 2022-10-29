@@ -1,0 +1,1 @@
+#### 1) Разница между *class* и *data class*,  *data object* и *object*

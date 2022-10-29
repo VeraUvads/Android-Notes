@@ -72,6 +72,9 @@ CoroutineExceptionHandler got java.lang.AssertionError
 
 ***
 
+
+
+
 #### Why is it forbidden to catch CancellationException?
 
 [//]: # (TODO)
@@ -79,7 +82,6 @@ CoroutineExceptionHandler got java.lang.AssertionError
 ***
 
 #### What is suspension point? How coroutines state machine will divide this code?
-!!!
 [//]: # (TODO)
 
 [//]: # (Suspension points are points in code which either end your program early &#40;mostly bad paths in programs&#41;, or which start some work on the side, in another routine which is suspended, ultimately notifying you of the end result, and allowing you to continue where you left off.)
@@ -95,6 +97,8 @@ launch {
 
 ```
 
+
+
 1. doSmthSuspend1 and everything above
 2. doSmthSuspend2 and everything between it and doSmthSuspend1
 3. everything after doSmthSuspend2
@@ -102,7 +106,7 @@ launch {
 ***
 
 #### How continuation.resume() set parameters to next continuation?
-!!!
+
 [//]: # (TODO поправить ошибку в логике)
 
  ```Kotlin
@@ -112,6 +116,14 @@ launch {
     doSmthSuspend2(firstResult)
 }
 ```
+
+
+
+
+
+
+
+
 
 continuation.resume(param)
 
@@ -145,7 +157,6 @@ thread at the entry point of the *await()*.
 ***
 
 #### Job types
-!!!
 
 *Job* - Creates a job object in an active state. A failure of any child of this job immediately causes 
 this job to fail, too, and cancels the rest of its children.
@@ -235,7 +246,6 @@ job.cancel()
 ***
 
 #### How to put custom data to CoroutineContext
-
 To coroutine Context we can put CoroutineContext.Element implementation. AbstractCoroutineContextElement - base class
 for CoroutineContext.Element implementations.
 
@@ -282,13 +292,6 @@ Nested coroutines launched in this dispatcher form an event-loop to avoid stack 
 Private thread pools can be created with *newSingleThreadContext* and *newFixedThreadPoolContext*.
 
 ***
-#### What is ContinuationInterceptor?
-
-[//]: # (TODO)
-
-
-***
-
 #### What is ContinuationInterceptor?
 
 [//]: # (TODO)

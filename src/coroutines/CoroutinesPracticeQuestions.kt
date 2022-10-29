@@ -59,6 +59,10 @@ class Deferred1 {
 
 }
 
+fun main() {
+    Deferred1()
+}
+
 
 /**3) Fix the code **/
 /**3) Исправьте код **/

@@ -19,9 +19,20 @@ Message exchanged with Binder are called binder transactions, they can transport
 such as integers but also process more complex structures like file descriptors, 
 memory buffers or weak/strong references on objects.
 
-***
-#### What is the Binder?
+Все происходит через байндер
 
 ***
+#### What processor does Android use?
+https://habr.com/ru/post/140459/
+
+***
+#### Why we don't use JVM on Android? 
+https://towardsdatascience.com/jvm-vs-dvm-b257229d18a2
+
+***
+#### Как данные могут передаваться в обход Binder
+
+***
+#### Как вырезать фигуру из вьюшки
 
 
