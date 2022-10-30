@@ -22,6 +22,9 @@ memory buffers or weak/strong references on objects.
 Все происходит через байндер
 
 ***
+#### Как данные могут передаваться в обход Binder
+
+***
 #### What processor does Android use?
 https://habr.com/ru/post/140459/
 
@@ -29,10 +32,12 @@ https://habr.com/ru/post/140459/
 #### Why we don't use JVM on Android? 
 https://towardsdatascience.com/jvm-vs-dvm-b257229d18a2
 
-***
-#### Как данные могут передаваться в обход Binder
 
 ***
 #### Как вырезать фигуру из вьюшки
+
+***
+#### Dagger/Hilt vs Koin
+https://proandroiddev.com/how-dagger-hilt-and-koin-differ-under-the-hood-c3be1a2959d7
 
 
