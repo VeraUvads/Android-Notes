@@ -22,17 +22,71 @@ memory buffers or weak/strong references on objects.
 Все происходит через байндер
 
 ***
-#### What processor does Android use?
-https://habr.com/ru/post/140459/
-
-***
-#### Why we don't use JVM on Android? 
-https://towardsdatascience.com/jvm-vs-dvm-b257229d18a2
-
-***
 #### Как данные могут передаваться в обход Binder
 
 ***
+#### What processor does Android use?
+[Link](https://habr.com/ru/post/140459/)
+
+***
+#### Why we don't use JVM on Android? 
+[Link](https://towardsdatascience.com/jvm-vs-dvm-b257229d18a2)
+
+
+***
 #### Как вырезать фигуру из вьюшки
+
+***
+#### Dagger/Hilt vs Koin
+[Link](https://proandroiddev.com/how-dagger-hilt-and-koin-differ-under-the-hood-c3be1a2959d7)
+
+***
+#### ServiceLocator vs DI
+
+***
+#### What is *Zygote* ?
+
+***
+#### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
+Dalvik - JIT
+ART- AOT
+JIT - takes less RAM, but runtime is much slower
+AOT - takes a lot of RAM, but runtime works is 20 time more efficient
+Profile-Guided Compilation - JIT, but if application is frequently uses AOT
+[Link](https://www.youtube.com/watch?v=0J1bm585UCc)
+
+
+***
+#### Самая ранняя точка входа в приложение? 
+Content provider ??
+
+***
+#### Отличия контекстов
+ 
+***
+#### Приоритеты процессов 
+
+***
+#### Мы обновили приложение, хранили Serializable и Parcelable. Добавили новое поле, как поддержать изменение?
+Parcelable: переопределить writeToParcel
+Serializable: переопределить serialVersionUID -> Позволит выбросить ошибку
+
+Можно сделать ручную сериализацию:
+Для Serializable : writeObject - readObject.
+Можно использовать Externalizable - принцип тот же что и у Parcelable, работает значительно быстрее чем Serializable, 
+но медленее чем Parcelable.
+
+[Link](https://www.youtube.com/watch?v=tko54cjc79U)
+
+***
+#### Жизненный цикл view. Когда при invalidate() не вызовется onDraw(). Всегда ли отработает requestLayout()? 
+![img.png](viewLifecycle.png)
+
+***
+#### Как избежать повторной синхронизации если предыдущая еще не закончилась? (например: пользователь зашел на экран, сразу же вышел и быстро вернулся обратно)
+идемпотентность
+
+***
+#### Разница между commit и commitAllowStateLoss
 
 
