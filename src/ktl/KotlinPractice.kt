@@ -19,6 +19,8 @@ fun variance() {
 
     var orangeList = arrayListOf<Orange>()
     var fruitList = arrayListOf<Fruit>()
+    var fruitList2 : ArrayList<out Fruit> = orangeList
+    var orangeList2 : ArrayList<in Orange> = fruitList
 //    fruitList = orangeList // forbidden
 //    orangeList = fruitList // forbidden
 
