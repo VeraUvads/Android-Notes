@@ -26,11 +26,12 @@ memory buffers or weak/strong references on objects.
 
 ***
 #### What processor does Android use?
-[Link](https://habr.com/ru/post/140459/)
+[Link]( )
 
 ***
 #### Why we don't use JVM on Android? 
 [Link](https://towardsdatascience.com/jvm-vs-dvm-b257229d18a2)
+[Link2](https://www.youtube.com/watch?v=duO5qgn2DO8)
 
 
 ***
@@ -81,6 +82,7 @@ Serializable: переопределить serialVersionUID -> Позволит 
 ***
 #### Жизненный цикл view. Когда при invalidate() не вызовется onDraw(). Всегда ли отработает requestLayout()? 
 ![img.png](viewLifecycle.png)
+// todo 
 
 ***
 #### Как избежать повторной синхронизации если предыдущая еще не закончилась? (например: пользователь зашел на экран, сразу же вышел и быстро вернулся обратно)
@@ -135,10 +137,69 @@ Serializable: переопределить serialVersionUID -> Позволит 
 ***
 #### Как андроид под капотом отрисовывает интерфейс?
 
-
 ***
-#### Как реализовать кэширование?
+#### Почему при перевороте экрана уничтожается Activity? 
 
  
+***
+#### Что такое zRam?
 
 
+***
+#### What is the difference between low memory killer and out of memory killer?
+Main difference is how LMK and OOM chooses a process to kill in low memory conditions.
+
+Main reason for introduction of LMK in android was OOM killer sometimes kill high priority process (Like foreground applications) in low memory conditions, on the other hand LMK has interface (oom score value) with activity manager (framework part) which knows priority of processes this results LMK always kill hidden and empty applications before killing foreground and active applications, apart from this some differences are below
+
+***
+#### Расскажите про версии garbage collector в Android
+1) Dalvik GC: the first GC implementation. It was a conservative, “stop the world” GC. It stops all the threads in the VM and does its work.
+2) ART GC (Lollipop & Marshmallow): the major and biggest change. The ART/Dalvik Android Team rewrites the entire GC. This GC was called the “Generational GC” because the objects now have “generations” based on the time they live. Several other big improvements were introduced here, including the way that GC allocates objects.
+3) ART GC (Nougat): the ART/Dalvik Android Team rewrites the entire allocation process in assembly code.
+4) ART GC (Oreo): an improvement of the ART GC v1. This time, the ART/Dalvik Android Team improves the way that GC does its work by making it concurrent. This was called the “Concurrent Copying Garbage Collector” among a lot of other improvements.
+[Link](https://www.youtube.com/watch?v=Cficzcp0ynU)
+[Link2](https://proandroiddev.com/collecting-the-garbage-a-brief-history-of-gc-over-android-versions-f7f5583e433c)
+
+***
+#### Расскажите подробнее про Dalvik GC
+Освобождение памяти проходит в 4 этапа:
+1) Сборщик мусора приостанавливает все потоки в системе, чтобы найти все объекты доступные от root. Это требует времени, и за это время ваше приложение ничего не может сделать.
+2) Следующее действие происходит параллельно. GC помечает все найденные объекты.  Это означает, что ваше приложение снова работает, но параллелизм приводит к проблеме. Поскольку ваше приложение снова запущено, оно может выделять объекты.
+3) Когда происходит новое выделение, GC снова приостанавливает все потоки, чтобы повторить пункт 1.
+4) Этап сборки объектов, не помеченных как активных. Происходит параллельно
+
+Dalvik позволил процессу увеличиваться только до 36 МБ в памяти (в зависимости от конкретной конфигурации устройства)
+
+***
+#### Расскажите подробнее про ART GC (Lollipop & Marshmallow)
+1) Больше нет ограничения по памяти для процесса, ART не имеет ограничений на объем памяти, который может запросить процесс.
+2) Алгоритм выделения и освобождения памяти по-прежнему CMS (Concurrent Mark-and-Sweep), но с улучшениями.
+Одним из самых больших улучшений в способе размещения объектов сборщиком мусора является замена алгоритма dlmalloc алгоритмом RosAlloc. Эти алгоритмы используются, когда вы создаете новый объект. 
+Отличительной особенностью RosAlloc является то, что он поддерживает потоки, а это означает, что он может выполнять распределения, специфичные для конкретного потока.
+3) Добавлены *fine-grained* блокировки, благодаря которым GC блокирует гораздо меньше кода. А также делает 1-ю фазу (поиск доступных от корня объектов) алгоритма пометки и очистки параллельной, 
+что сокращает время, необходимое для запустите алгоритм маркировки и очистки от ~ 10 мс до ~ 3 мс.
+4) Добавлены *GC generations*. *Young*, *Old*, *Permanent*. Первоначально все объекты помещаются  в *Young*, но с течением времени, если прожили достаточно долго переходят в более старые.
+Если мы хотим создать объект, а памяти не хватает, GC  в первую очередь освободит память в *Young*, 
+и только если там нечего освобождать пойдет в *Old*.
+
+***
+#### Расскажите подробнее про ART GC (Nougat)
+1) Полностью переписали выделение памяти сборщиком мусора в ассемблерном коде, 
+что позволило сделать выделение памяти в 10 раз быстрее,
+***
+#### Расскажите подробнее про ART GC (Oreo)
+1) Опять полностью переписали GC и назвали  его *Concurrent Heap Compaction Collector*.
+    1) Оптимизировали дефрагментацию, что позволило оптимизировать работу с памятью на 30% 
+    2) В этой версии сборщик мусора делит кучу на «сегменты». Когда потоку требуется память, сборщик мусора предоставляет этому потоку «сегмент» для локального выделения объектов. Таким образом, поток может локально выделять или собирать объекты в этом сегменте, избегая блокировки всей системы для выполнения этой работы.
+    3) Взаимовытекающее из предыдущего: при дефрагментации сегмента, если он используется менее 70% или 75%, этот "сегемент" будет собран, а находящиеся там объекты будут перемещены в другой сегмент.
+
+За счет этого, время выделения в 18 раз быстрее, чем у Dalvik, и на 70% быстрее, чем у Nougat.
+2) Убрали Generation GC :)
+
+***
+#### Расскажите подробнее про GC Андроид 10 (Q)
+1) Вернули Generation GC :) 
+***
+#### Как происходит запуск приложения 
+// todo
+![Image](app_launch.png)
