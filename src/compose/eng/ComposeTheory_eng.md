@@ -50,3 +50,5 @@ Allow register and unregister observers when needed.
 *snapshotFlow* -  ?
 
 
+#### 5) Что такое Snapshot Policy? 
+
