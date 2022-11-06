@@ -105,3 +105,5 @@ class Example<in T, out V> {
  ```
 
 #### 8) Разница между Nothing, Unit и Any
+
+#### 9) Можно ли наследоваться от data class? Почему?
