@@ -34,8 +34,8 @@ RUS
 12) Как поместить дополнительные данные в CoroutineContext?
 13) Напишите код который приведет к deadlock
 14) Как отменяются скоупы при выбросе ошибки в дочернем скоупе? 
-15) Что такое Floприорw? Когда мы должны его использовать?
-16) Что такое CoroutineDispatcher? В какиех случаях какой использовать?
+15) Что такое Flow? Когда мы должны его использовать?
+16) Что такое CoroutineDispatcher? В каких случаях какой использовать?
 
 ##### [Ответы по теории Coroutines](src/coroutines/ru/CoroutinesTheory_ru.md)
 ##### [Вопросы по практике Coroutines](src/coroutines/CoroutinesPracticeQuestions.kt)
@@ -72,7 +72,13 @@ RUS
 ##### [Теория андроид](src/common_android/eng/CommonAndroid_eng.md)
 
 
-
+### DI
+1) Dagger/Hilt vs Koin
+2) ServiceLocator vs DI 
+3) Основные компоненты в DI
+4) Аннотации в Dagger
+5) Как работает создаение Scope компонента под капотом?
+6) Почему Hilt не стоит использовать для многомодульности
 ***
 
 ENG
