@@ -1,9 +1,9 @@
 package coroutines
 
 import kotlinx.coroutines.*
+import utils.Activity
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import kotlin.coroutines.CoroutineContext
 
 // Answers here ( https://github.com/VeraUvads/Android-Notes/blob/18127f03c878f8717f844c4809e0308fd192c7b6/src/coroutines/eng/CoroutinesPracticeAnswers_eng.md )
 // Ответы по ссылке  ( https://github.com/VeraUvads/Android-Notes/blob/18127f03c878f8717f844c4809e0308fd192c7b6/src/coroutines/ru/CoroutinesPracticeAnswers_ru.md )
@@ -71,25 +71,17 @@ class Lifecycle1 {
         MainActivity()
     }
 
-
-    internal class MainActivity { // trust me, this is real Activity
-        init { onCreate() }
-
-        private val lifecycleScope = CoroutineScope(Dispatchers.Default)
+    internal class MainActivity: Activity() {
         private val viewModel = ViewModel()
-        private fun onCreate() {
-            onClick {
+
+        override fun onCreate() {
+            onClickToSmth {
                 lifecycleScope.async { viewModel.callApi() }
             }
-        }
-        // ignore that fun
-        private fun onClick(action: suspend () -> Deferred<Unit>) = runBlocking {
-            action().await()
         }
     }
 
     internal class ViewModel {
-        private val viewModelScope = CoroutineScope(Dispatchers.Default)
         suspend fun callApi() {
             println("Job started")
             delay(2000)
@@ -99,3 +91,5 @@ class Lifecycle1 {
 }
 
 
+/**4) Write code with coroutines deadlock **/
+/**4) Напишите код который приведет к deadlock **/

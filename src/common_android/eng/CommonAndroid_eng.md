@@ -26,7 +26,7 @@ memory buffers or weak/strong references on objects.
 
 ***
 #### What processor does Android use?
-[Link]( )
+[Link](https://habr.com/ru/post/140459/)
 
 ***
 #### Why we don't use JVM on Android? 
@@ -36,13 +36,6 @@ memory buffers or weak/strong references on objects.
 
 ***
 #### Как вырезать фигуру из вьюшки
-
-***
-#### Dagger/Hilt vs Koin
-[Link](https://proandroiddev.com/how-dagger-hilt-and-koin-differ-under-the-hood-c3be1a2959d7)
-
-***
-#### ServiceLocator vs DI
 
 ***
 #### What is *Zygote* ?
@@ -98,14 +91,6 @@ Serializable: переопределить serialVersionUID -> Позволит 
 
 ***
 #### Как реализовать mvi?
-
-
-
-***
-#### Основные компоненты в DI?
-
-***
-#### Как работает создаение Scope компонента под капотом?
 
 
 
@@ -218,4 +203,3 @@ Dalvik позволил процессу увеличиваться только
 
 
 ***
-#### Почему Hilt не стоит использовать для многомодульности
