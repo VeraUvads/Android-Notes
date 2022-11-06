@@ -69,7 +69,7 @@ RUS
 18) Расскажите про версии garbage collector в Android
 19) Как происходит запуск приложения
 20) Что такое Zygote?
-##### [Теория андроид](src/common_android/eng/CommonAndroid_eng.md)
+##### [Теория Android](src/common_android/eng/CommonAndroid_eng.md)
 
 
 ### DI
@@ -79,6 +79,8 @@ RUS
 4) Аннотации в Dagger
 5) Как работает создаение Scope компонента под капотом?
 6) Почему Hilt не стоит использовать для многомодульности
+
+##### [Теория DI](src/di/ru/DI_ru.md)
 ***
 
 ENG
