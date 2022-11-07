@@ -1,4 +1,4 @@
-# Android-Notes
+# Android-Notes (in  progress)
 
 RUS
 
@@ -76,9 +76,12 @@ RUS
 1) Dagger/Hilt vs Koin
 2) ServiceLocator vs DI 
 3) Основные компоненты в DI
-4) Аннотации в Dagger
-5) Как работает создаение Scope компонента под капотом?
-6) Почему Hilt не стоит использовать для многомодульности
+### Dagger
+1) Аннотации в Dagger
+2) Как работает создаение Scope компонента под капотом?
+3) Почему Hilt не стоит использовать для многомодульности
+4) Lazy vs Scope?
+5) В чем минус Subcomponent? Как разделить логику компонента без использования subcomponent?
 
 ##### [Теория DI](src/di/ru/DI_ru.md)
 ***
