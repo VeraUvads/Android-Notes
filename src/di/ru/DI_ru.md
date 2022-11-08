@@ -74,7 +74,32 @@ class App : Application() {
 Вместо этого временно сохраняет экземпляр в памяти, позволяя не создавать каждый раз новый экземпляр при обращении, но
 не гарантирует что объект всегда будет один.
 
-*@Scope* -
+*@Scope* - 
+
+*@IntoSet* - позволяет сделать инжект коллекциии Set, для всех элементов одного и того же типа
+
+Example:
+
+ ```Kotlin
+ interface AppModule {
+     
+     @Binds
+     @IntoSet
+     fun orangeToFruit(orange: Orange) : Fruit
+     
+     @Binds
+     @IntoSet
+     fun appleToFruit(apple: Apple) : Fruit
+     
+ }
+
+class IUseFruits @Inject constructor(
+   private val fruits: Set<@JvmSuppressWildcards Fruits> // аннотация нужна из-за особенностей пересечения Kotlin и Java
+)
+
+
+ ```
+
 
 ***
 
