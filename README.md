@@ -46,6 +46,16 @@ RUS
 2) remember, remember(key), rememberSaveable, remember { derivedStateOf() } различия
 3) Что такое Side-Effect?
 4) Какие виды Side-Effect бывают?
+5) Что такое Snapshot Policy? 
+6) Переиспользует ли LazyColumn элементы по аналогии с RecyclerView?
+7) Сохранит ли _by remember {}_ свое значение при повороте экрана?
+8) Что значит поднятие состояния (state hoisting)?
+9) Способы сохранения состояния при смене конфигурации 
+10) Жизненный цикл composable
+11) Можно ли передавать viewModel в дочерние composable функции?
+12) Как избежать вызова рекомпозиции всех элементов списка при добавлении одного нового элемента?
+13) За что отвечает аннотация @Stable
+14) Как добавить отступы между элементами списка?
 ##### [Ответы по теории Compose](src/compose/eng/ComposeTheory_eng.md)
 
 ### Android
@@ -69,21 +79,40 @@ RUS
 18) Расскажите про версии garbage collector в Android
 19) Как происходит запуск приложения
 20) Что такое Zygote?
-##### [Теория Android](src/common_android/eng/CommonAndroid_eng.md)
+21) Разница между targetSDK и compileSdk 
+22) Как происходит компиляция приложения
+23) Что такое процесс в Android
+24) Что такое App Sandbox 
+25) Может ли BroadcastReceiver быть запущен без объявления в манифесте? 
+26) Виды сервисов 
+27) Отличие IntentService, Service, JobIntentService, JobService
+28) За что отвечают Content resolver и Content Provider
+29) Что такое PendingIntent? 
+30) Если создать два Pending Intent отличные только по данным помещенным в data, с какой ошибкой можно столкнуться?
+31) Когда можно сохранять state чтобы гарантированно восстановить его даже в случае если андроид убьёт приложение?
+32) Какие launch mode существуют?
+##### [Ответы Android](src/common_android/eng/CommonAndroid_eng.md)
 
 
 ### DI
 1) Dagger/Hilt vs Koin
 2) ServiceLocator vs DI 
 3) Основные компоненты в DI
-### Dagger
+###### Dagger
 1) Аннотации в Dagger
 2) Как работает создаение Scope компонента под капотом?
 3) Почему Hilt не стоит использовать для многомодульности
 4) Lazy vs Scope?
 5) В чем минус Subcomponent? Как разделить логику компонента без использования subcomponent?
 
-##### [Теория DI](src/di/ru/DI_ru.md)
+##### [Ответы DI](src/di/ru/DI_ru.md)
+
+### Multithreading
+
+1) В чем отличие потока от процесса
+2) Какую функцию выполняет Handler?
+
+##### [Ответы Multithreading](src/multithreading/ru/Multithreading_ru.md)
 ***
 
 ENG

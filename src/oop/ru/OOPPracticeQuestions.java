@@ -69,13 +69,6 @@ public class OOPPracticeQuestions {
 
 
 
-
-
-
-
-
-
-
     /**
      * 3) Что выведется и в каком порядке?
      **/
