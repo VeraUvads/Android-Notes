@@ -46,17 +46,24 @@ RUS
 2) remember, remember(key), rememberSaveable, remember { derivedStateOf() } различия
 3) Что такое Side-Effect?
 4) Какие виды Side-Effect бывают?
-5) Что такое Snapshot Policy? 
-6) Переиспользует ли LazyColumn элементы по аналогии с RecyclerView?
-7) Сохранит ли _by remember {}_ свое значение при повороте экрана?
-8) Что значит поднятие состояния (state hoisting)?
-9) Способы сохранения состояния при смене конфигурации 
-10) Жизненный цикл composable
-11) Можно ли передавать viewModel в дочерние composable функции?
-12) Как избежать вызова рекомпозиции всех элементов списка при добавлении одного нового элемента?
-13) За что отвечает аннотация @Stable
-14) Как добавить отступы между элементами списка?
-##### [Ответы по теории Compose](src/compose/eng/ComposeTheory_eng.md)
+5) Типы state
+6) Что такое Snapshot Policy? 
+7) Переиспользует ли LazyColumn элементы по аналогии с RecyclerView?
+8) Сохранит ли _by remember {}_ свое значение при повороте экрана?
+9) Что значит поднятие состояния (state hoisting)?
+10) Способы сохранения состояния при смене конфигурации 
+11) Жизненный цикл composable
+12) Можно ли передавать viewModel в дочерние composable функции?
+13) Как избежать вызова рекомпозиции всех элементов списка при добавлении одного нового элемента?
+14) За что отвечает аннотация @Stable
+15) Как добавить отступы между элементами списка?
+16) Когда мы работаем с ViewGroup, большая вложенность элементов приводит к частому измерению размеров, и уменьшает производительность. Сохраняется ли такая проблема в Compose?
+17) Можно ли изменить количество измерений размеров для компоуз элементов?
+18) Как создать свой Layout (ViewGroup)? 
+19) Что такое CompositionLocal?
+20) compositionLocalOf vs staticCompositionLocalOf
+21) Три фазы создания Composable UI 
+##### [Ответы по теории Compose](src/compose/ru/ComposeTheory_ru.md)
 
 ### Android
 1) Лимит на размер bundle?
@@ -127,7 +134,7 @@ Full questions list for Coroutines, Compose, Common Android topics
 ##### [CoroutinesPracticeAnswers](src/coroutines/eng/CoroutinesPracticeAnswers_eng.md)
 
 ### Compose
-##### [ComposeTheory](src/compose/eng/ComposeTheory_eng.md)
+##### [ComposeTheory](src/compose/ru/ComposeTheory_ru.md)
 
 ### Android
 ##### [AndroidTheory](src/common_android/eng/CommonAndroid_eng.md)
