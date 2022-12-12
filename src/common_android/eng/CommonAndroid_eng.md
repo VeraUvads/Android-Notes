@@ -47,12 +47,25 @@ weak/strong references on objects.
 
 #### What is *Zygote* ?
 
+Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между 
+процессами. Это можно сделать следующими способами:
+
+[TODO](https://developer.android.com/topic/performance/memory-overview)
 ***
 
 #### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
 
-Dalvik - JIT ART- AOT JIT - takes less RAM, but runtime is much slower AOT - takes a lot of RAM, but runtime works is 20
-time more efficient Profile-Guided Compilation - JIT, but if application is frequently uses AOT
+Dalvik - JIT 
+
+ART- AOT 
+
+JIT - takes less RAM, but runtime is much slower 
+
+AOT - takes a lot of RAM, but runtime works is 20 time more efficient 
+
+Profile-Guided Compilation - JIT, but if application is frequently uses AOT
+
+
 [Link](https://www.youtube.com/watch?v=0J1bm585UCc)
 
 
@@ -70,17 +83,37 @@ Content provider ??
 
 #### Приоритеты процессов
 
--Foreground Service 
+-Foreground process 
 Visible Process 
 Service Process 
 Background process 
 Empty Process
 
+1.Процесс с которым взаимодействует пользователь(Foreground process)
+К таким процессам относится например: активити с которым взаимодействует пользовать; 
+сервис(экземпляр Service), с которым взаимодействует пользователь; сервис запущенный методом startForeground(); 
+сервис, который выполняет один из методов своего жизненного цикла; 
+BroadcastReceiver который выполняет метод onReceive().
+
+2.Видимый процесс
+Процесс, в котором не выполнены условия из пункта №1, но который влияет на то, что пользователь видит на экране. 
+К примеру, вызван метод onPause() активити.
+
+3.Сервисный процесс
+Служба запущенная методом startService()
+
+4.Фоновый процесс
+Процесс выполняемый в фоновом режиме, который не виден пользователю.
+
+5.Пустой процесс
+
 ***
 
 #### Мы обновили приложение, хранили Serializable и Parcelable. Добавили новое поле, как поддержать изменение?
 
-Parcelable: переопределить writeToParcel Serializable: переопределить serialVersionUID -> Позволит выбросить ошибку
+Parcelable: переопределить writeToParcel 
+
+Serializable: переопределить serialVersionUID -> Позволит выбросить ошибку
 
 Можно сделать ручную сериализацию:
 Для Serializable : writeObject - readObject. Можно использовать Externalizable - принцип тот же что и у Parcelable,
@@ -292,6 +325,7 @@ Dalvik позволил процессу увеличиваться только
 ***
 
 #### Что такое процесс в Android
+[Link](https://habr.com/ru/post/124484/)  TODO
 
 ***
 
@@ -337,6 +371,9 @@ terminated.
 *Foreground Service* - service that stays alive even when the app is terminated.
 
 *Bound Service* - service that runs only if the component it is bound to is still active.
+
+#### Жизненный цикл сервисов 
+![img.png](service_lifecycle.png)
 
 #### Отличие IntentService, Service, JobIntentService, JobService
 
@@ -440,4 +477,9 @@ content://com.android.contacts/contacts/3
 #### Launch mode
 [Link](https://medium.com/android-news/android-activity-launch-mode-e0df1aa72242)
 
+#### История версий 
+[Link](https://habr.com/ru/company/tinkoff/blog/686614/)
+
+
+#### Work manager
 

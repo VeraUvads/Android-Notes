@@ -16,7 +16,7 @@ functions or lambdas that don't have changed parameters, Compose can recompose e
 the saved instance state mechanism (for example it happens when the screen is rotated in the Android application).
 
 *remember { derivedStateOf(data) }* - similarly to *remember(key)*, but will recompose only if the result inside lambda
-changes
+changes // проверить 
 
 ***
 
@@ -320,15 +320,17 @@ _staticCompositionLocalOf_ -  staticCompositionLocalOf не следит кто 
 
 
 #### 21) The three phases of a frame 
+[Link](https://developer.android.com/jetpack/compose/phases)
 
 ![img.png](frame_phases.png)
 
-_Composition_ - что показать. Запускает компонуемые функции и создает описание пользовательского интерфейса.
+_Composition_ - _что_ показать. Запускает компонуемые функции и создает описание пользовательского интерфейса.
 
-_Layout_ - где показать. Состоит из двух шагов - измерение и размещения (measurement and placement).
+_Layout_ - _где_ показать. Состоит из двух шагов - измерение и размещения (measurement and placement).
 Элементы измеряют и размещают себя и любые дочерние элементы в 2D-координатах для каждого узла в дереве компоновки.
 
-_Drawing_ - как отрисовать. Сама отрисовка.
+_Drawing_ - _как_ отрисовать. Сама отрисовка.
+
 
 
 

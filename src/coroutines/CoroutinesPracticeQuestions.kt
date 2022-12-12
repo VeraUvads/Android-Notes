@@ -63,7 +63,6 @@ fun main() {
     Deferred1()
 }
 
-
 /**3) Fix the code **/
 /**3) Исправьте код **/
 class Lifecycle1 {
