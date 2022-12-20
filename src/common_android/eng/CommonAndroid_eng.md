@@ -12,6 +12,23 @@ hold on to the provided data for as long as the user can ever navigate back to t
 
 ***
 
+#### Способы общения между процессами
+
+1) Intent + Bundle
+2) ContentProvider
+3) Messenger
+
+Messenger - клиент серверное взаимодействие. Процесс-клиент посылает данные на процесс-сервер.
+Работает с bindServices которые живут в другом процессе.
+![img.png](IPCmessenger.png)
+
+4) Socket-NDK
+
+Все они под капотом используют Binder
+![img.png](arch_kernel_level.png)
+***
+
+
 #### What is the Binder transaction?
 
 Binder is the main IPC/RPC (Inter-Process Communication) system in Android. It allows applications to communicate with
@@ -19,13 +36,8 @@ each other, and it is the base of several important mechanisms in the Android en
 services are built on top of Binder. Message exchanged with Binder are called binder transactions, they can transport
 simple data such as integers but also process more complex structures like file descriptors, memory buffers or
 weak/strong references on objects.
-
-
-***
-
-#### Как данные могут передаваться в обход Binder
-
-***
+![img.png](binder_framework.png)
+[Link](https://boosty.to/androidbroadcast/posts/904c5065-6c7e-4f75-b8e6-20cb8a607170)
 
 #### What processor does Android use?
 
@@ -47,10 +59,25 @@ weak/strong references on objects.
 
 #### What is *Zygote* ?
 
-Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между 
-процессами. Это можно сделать следующими способами:
+[//]: # (Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между )
 
-[TODO](https://developer.android.com/topic/performance/memory-overview)
+[//]: # (процессами. Это можно сделать следующими способами:)
+
+[//]: # ()
+[//]: # ([TODO]&#40;https://developer.android.com/topic/performance/memory-overview&#41;)
+
+Каждое приложение запускается в отдельном процессе.
+
+Zygote - специальный системный процесс, от которого мы запускаем процессы своего прложения.
+
+Функция fork - полностью копирует родительский процесс, отличается только processId.
+
+От Zygote через fork создает новый процесс, который уже содержит все необходимое для функционирования
+нашего приложения.  Процессы не могут иметь доступ к памяти друг друга, и следовательно,
+никто не сможет получить доступ к нашим данным.
+![img.png](process_fork.png)
+
+
 ***
 
 #### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
@@ -481,5 +508,5 @@ content://com.android.contacts/contacts/3
 [Link](https://habr.com/ru/company/tinkoff/blog/686614/)
 
 
-#### Work manager
+#### Что происходит когда мы добавляем 
 
