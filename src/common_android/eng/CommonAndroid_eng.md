@@ -117,7 +117,8 @@ Content provider ??
 
 ***
 
-#### Отличия контекстов
+#### Что такое Context? Чем они отличаются друг от друга?
+[Link](https://www.fandroid.info/context-kontekst-v-android-chto-eto-kak-poluchit-i-zachem-ispolzovat/)
 
 ***
 
@@ -167,12 +168,6 @@ Serializable: переопределить serialVersionUID -> Позволит 
 
 ![img.png](viewLifecycle.png)
 // todo
-
-***
-
-#### Как избежать повторной синхронизации если предыдущая еще не закончилась? (например: пользователь зашел на экран, сразу же вышел и быстро вернулся обратно)
-
-идемпотентность
 
 ***
 
@@ -273,7 +268,9 @@ killing foreground and active applications, apart from this some differences are
 
 ***
 
-#### Расскажите про версии garbage collector в Android
+#### Garbage Collector
+
+###### Расскажите про версии garbage collector в Android
 
 1) Dalvik GC: the first GC implementation. It was a conservative, “stop the world” GC. It stops all the threads in the
    VM and does its work.
@@ -289,8 +286,7 @@ killing foreground and active applications, apart from this some differences are
 
 ***
 
-#### Расскажите подробнее про Dalvik GC
-
+###### Расскажите подробнее про Dalvik GC
 Освобождение памяти проходит в 4 этапа:
 
 1) Сборщик мусора приостанавливает все потоки в системе, чтобы найти все объекты доступные от root. Это требует времени,
@@ -304,7 +300,7 @@ Dalvik позволил процессу увеличиваться только
 
 ***
 
-##### Расскажите подробнее про ART GC (5 Lollipop & 6 Marshmallow)
+###### Расскажите подробнее про ART GC (5 Lollipop & 6 Marshmallow)
 
 1) Больше нет ограничения по памяти для процесса, ART не имеет ограничений на объем памяти, который может запросить
    процесс.
@@ -322,14 +318,14 @@ Dalvik позволил процессу увеличиваться только
 
 ***
 
-##### Расскажите подробнее про ART GC (7 Nougat)
+###### Расскажите подробнее про ART GC (7 Nougat)
 
 1) Полностью переписали выделение памяти сборщиком мусора в ассемблерном коде, что позволило сделать выделение памяти в
    10 раз быстрее,
 
 ***
 
-##### Расскажите подробнее про ART GC (8 Oreo)
+###### Расскажите подробнее про ART GC (8 Oreo)
 
 1) Опять полностью переписали GC и назвали его *Concurrent Heap Compaction Collector*.
     1) Оптимизировали дефрагментацию, что позволило оптимизировать работу с памятью на 30%
@@ -345,7 +341,7 @@ Dalvik позволил процессу увеличиваться только
 
 ***
 
-#### Расскажите подробнее про GC Андроид 10 (Q)
+###### Расскажите подробнее про GC Андроид 10 (Q)
 
 1) Вернули Generation GC :)
 
@@ -520,6 +516,4 @@ content://com.android.contacts/contacts/3
 #### История версий 
 [Link](https://habr.com/ru/company/tinkoff/blog/686614/)
 
-
-#### Что происходит когда мы добавляем 
 

@@ -35,7 +35,12 @@ ColorPoint p3 == new ColorPoint(1, 2, Color.BLUE)
 *Ошибка N3*
 
  ```
-// TODO про getClass
+ @Override public boolean equals(Object o) {
+       if (o == null || o.getClass() != getClass())
+           return false;
+       Point p = (Point) o;
+       return p.x == x && p.y == y;
+   }
    ```
 
 Нарушение принципа Барбары Лисков

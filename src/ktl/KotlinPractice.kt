@@ -2,7 +2,7 @@ package ktl
 
 
 fun main() {
-//    threadsDeadLock()
+    threadsDeadLock()
 }
 
 fun threadsDeadLock() {

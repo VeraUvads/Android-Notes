@@ -83,7 +83,7 @@ fun doSmth(orangeList: ArrayList<in Orange>) {
 doSmth2(orangeList)
 
 fun doSmth2(orangeList: ArrayList<out Fruit>) {
-    orangeList.forEach {
+    orangeList.forEach { 
 
     }
 //    orangeList.add(Orange())  не даст ничего добавить потому что тип использующий out == Nothing
@@ -113,3 +113,6 @@ class Example<in T, out V> {
 
 Выражение после by является делегатом, потому что геттеры и сеттеры, делегированы его методам getValue() и setValue(). 
 Делегаты свойств не должны реализовывать интерфейс, но они должны предоставлять getValue() функцию (и setValue() для vars).
+
+#### 11) Во что компилируется _typealias_?
+
