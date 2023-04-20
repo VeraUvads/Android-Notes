@@ -397,6 +397,19 @@ BroadcastReceiver могжет быть либо объявлен в маниф�
 registerReceiver()
 ```
 
+Dalvik - JIT
+
+ART- AOT
+
+JIT - takes less RAM, but runtime is much slower
+
+AOT - takes a lot of RAM, but runtime works is 20 time more efficient
+
+Profile-Guided Compilation - JIT, but if application is frequently uses AOT
+
+
+[Link](https://www.youtube.com/watch?v=0J1bm585UCc)
+
 ***
 
 #### Виды сервисов

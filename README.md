@@ -98,7 +98,7 @@ RUS
 30) Если создать два Pending Intent отличные только по данным помещенным в data, с какой ошибкой можно столкнуться?
 31) Когда можно сохранять state чтобы гарантированно восстановить его даже в случае если андроид убьёт приложение?
 32) Какие launch mode существуют?
-##### [Ответы Android](src/common_android/eng/CommonAndroid_eng.md)
+##### [Ответы Android](src/common_android/CommonAndroid_eng.md)
 
 
 ### DI
@@ -137,6 +137,6 @@ Full questions list for Coroutines, Compose, Common Android topics
 ##### [ComposeTheory](src/compose/ru/ComposeTheory_ru.md)
 
 ### Android
-##### [AndroidTheory](src/common_android/eng/CommonAndroid_eng.md)
+##### [AndroidTheory](src/common_android/CommonAndroid_eng.md)
 
 ****
