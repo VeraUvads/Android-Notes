@@ -40,11 +40,38 @@ The kernel splits the available CPU execution time for processes and their threa
 
 
 ### [2] Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
+[//]: # (TODO https://medium.com/programming-lite/android-core-jvm-dvm-art-jit-aot-855039a9a8fa)
 
 ### [3] What is App Sandbox?
 
+Applications execute in different processes and Virtual Machines. 
+Each Android app lives in its own security sandbox. By default, every app runs in its own Linux process.
+Each process has its own virtual machine (VM).
+
+![img.png](img/sandbox.png)
+
+Each process has its own virtual machine (VM), so an app's code runs in isolation from other apps. By default, every app runs in its own
+Linux process. The Android system starts the process when any of the app's components need to be executed, and then
+shuts down the process when it's no longer needed or when the system must recover memory for other apps.
+
+By default, the system assigns each app a unique Linux user ID (the ID is used only by the system and is unknown to the app). The system sets
+permissions for all the files in an app so that only the user ID assigned to that app can access them. 
+The Android system implements the principle of least privilege. That is, each app, by default, has access only to the components
+that it requires to do its work and no more. This creates a very secure environment in which an app cannot access parts
+of the system for which it is not given permission. 
+
+To share data with other apps look [Inter Process Communication](#5-inter-process-communication-ipc)
+
+It's possible to arrange for two apps to share the same Linux user ID (AndroidManifest - sharedUserID), in which case they are able to access each
+other's files. To conserve system resources, apps with the same user ID can also arrange to run in the same Linux
+process and share the same VM. The apps must also be signed with the same certificate.
+
+
 ### [4] Android build process
 [//]: # (TODO https://medium.com/androiddevnotes/the-internals-of-android-apk-build-process-article-5b68c385fb20)
+
+### [5] Inter process communication (IPC)
+
 
 
 
