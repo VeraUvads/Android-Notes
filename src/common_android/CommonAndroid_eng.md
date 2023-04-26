@@ -72,6 +72,38 @@ process and share the same VM. The apps must also be signed with the same certif
 
 ### [5] Inter process communication (IPC)
 
+### [6] How the application launch process works
+An application is launched when one of its components (Activity, Service, BroadcastReceiver, ContentProvider) is initiated to execute.
+Any component can be an entry point for an application, and as soon as the first component starts, the Linux process (if not already running) is started,
+which results in the following startup sequence:
+
+1. Linux process starts
+2. Android Runtime is created
+3. An instance of the Application class is created
+4. The application entry point component is created
+
+Setting up a new Linux process and runtime is not an instant operation. This may reduce
+performance and have a noticeable impact on the user experience. So the system tries
+reduce the startup time of Android applications by launching a special process called Zygote at system boot.
+
+What does Zygote do? To answer this question, you need to understand how processes work.
+
+At the very early stage of loading the Linux OS (at the time of loading the kernel) the very first process is created -
+_swapper_ or _sched_ (a process with Process ID = 0).
+Each process can create new processes (child process), through the fork function. Fork involves the creation of a new process that is an exact copy of the parent process.
+![img.png](img/process_fork_2.png)
+
+Efficient and fast application launch is achieved by the fact that Zygote starts with a preload
+all classes and resources that the application may potentially need at runtime into system memory.
+When the application starts, it forks from the Zygote process. It is the parent for all Android applications.
+
+Zygote comes pre-installed with the entire set of core libraries. New application processes are forked from the Zygote 
+process without copying core libraries that are common to all applications.
+
+Fork involves the creation of a new process that is an exact copy of the parent process. It doesn't actually copy anything, instead
+it maps the resources of the new process to those of the parent process and makes copies only when the new process changes something.
+
+[Read more: Linux process lifecycle](https://www.okbsapr.ru/library/publications/kanner_2015_3/)
 
 
 
