@@ -1,109 +1,159 @@
 ### [1] What is Android Software Stack. What are the major components of the Android platform?
 
-Applications run on top of a software stack that is based on a Linux kernel, native C/C++ libraries, and a runtime that executes the application code.
+Applications run on top of a software stack that is based on a Linux kernel, native C/C++ libraries, and a runtime that
+executes the application code.
 
 ![img.png](img/AndroidSoftwareStack.png)
 
 From the top:
 
-1. **System Apps**  - Android applications that are implemented in Java. They utilize both Java and Android framework libraries.
-Android comes with a set of core apps for email, SMS messaging, calendars, internet browsing, contacts, and more.
-If your app would like to deliver an SMS message, you don't need to build that functionality yourself—you can instead invoke whichever SMS app is already installed to deliver a message to the recipient you specify.
+1. **System Apps**  - Android applications that are implemented in Java. They utilize both Java and Android framework
+   libraries. Android comes with a set of core apps for email, SMS messaging, calendars, internet browsing, contacts,
+   and more. If your app would like to deliver an SMS message, you don't need to build that functionality yourself—you
+   can instead invoke whichever SMS app is already installed to deliver a message to the recipient you specify.
 
-2. **Java API framework** - **The entire feature-set of the Android OS** is available to you **through APIs** written in the Java language.  
-It contains Android classes that handle the window system, UI toolkit, resources, and so on—basically everything that is required to write an Android application in Java.
-The framework **defines and manages the lifecycles** of the Android components and their intercommunication. It defines a set of Android-specific 
-asynchronous mechanisms that applications can utilize to simplify the thread management: HandlerThread, AsyncTask, IntentService, AsyncQueryHandler, and etc. 
+2. **Java API framework** - **The entire feature-set of the Android OS** is available to you **through APIs** written in
+   the Java language.  
+   It contains Android classes that handle the window system, UI toolkit, resources, and so on—basically everything that
+   is required to write an Android application in Java. The framework **defines and manages the lifecycles** of the
+   Android components and their intercommunication. It defines a set of Android-specific asynchronous mechanisms that
+   applications can utilize to simplify the thread management: HandlerThread, AsyncTask, IntentService,
+   AsyncQueryHandler, and etc.
 
-3. **Native C/C++ Libraries** - Many core Android system components and services, such as ART and HAL, are built from native code that require native libraries written in C and C++.
-Java applications normally don’t interact directly with the native libraries because the Application framework provides Java wrappers for the native code.
-If you are developing an app that requires C or C++ code, you can use the _Android NDK_ to access some of these native platform libraries directly from your native code.
+3. **Native C/C++ Libraries** - Many core Android system components and services, such as ART and HAL, are built from
+   native code that require native libraries written in C and C++. Java applications normally don’t interact directly
+   with the native libraries because the Application framework provides Java wrappers for the native code. If you are
+   developing an app that requires C or C++ code, you can use the _Android NDK_ to access some of these native platform
+   libraries directly from your native code.
 
-    The Native Development Kit (NDK) - is a set of tools that allows you to use C and C++ code with Android. Allows you to build **performance-critical** parts of your app.
-hen you build your project, this code is compiled into a native library that Gradle can package with your app.
+   The Native Development Kit (NDK) - is a set of tools that allows you to use C and C++ code with Android. Allows you
+   to build **performance-critical** parts of your app. hen you build your project, this code is compiled into a native
+   library that Gradle can package with your app.
 
-4. **Android Runtime** - Each app runs in its own process ([App sandbox question](#3-what-is-app-sandbox)) and with its own instance of the Android Runtime.
-Android Runtime is written to run multiple virtual machines on low-memory devices by executing DEX files.
-DEX files - a bytecode format designed specially for Android that's optimized for minimal memory footprint. 
-Build tools, such as d8, compile Java sources into DEX bytecode, which can run on the Android platform.
+4. **Android Runtime** - Each app runs in its own process ([App sandbox question](#3-what-is-app-sandbox)) and with its
+   own instance of the Android Runtime. Android Runtime is written to run multiple virtual machines on low-memory
+   devices by executing DEX files. DEX files - a bytecode format designed specially for Android that's optimized for
+   minimal memory footprint. Build tools, such as d8, compile Java sources into DEX bytecode, which can run on the
+   Android platform.
 
-    Before Android version 5.0 (API level 21) it was Dalvik, but now its ART ([Dalvik vs ART](#2-difference-between-dalvik-and-art--what-is-profile-guided-compilation)).
+   Before Android version 5.0 (API level 21) it was Dalvik, but now its
+   ART ([Dalvik vs ART](#2-difference-between-dalvik-and-art--what-is-profile-guided-compilation)).
 
-5. **HAL (Hardware Abstraction Layer)** - provides standard interfaces that expose device hardware capabilities to the higher-level Java API Framework. 
-The HAL consists of multiple library modules, each of which implements an interface for a specific type of hardware components, such as the camera or Bluetooth module, for example. 
-**When a framework API makes a call** to access device hardware, the Android system **loads** the library module for that hardware component.
+5. **HAL (Hardware Abstraction Layer)** - provides standard interfaces that expose device hardware capabilities to the
+   higher-level Java API Framework. The HAL consists of multiple library modules, each of which implements an interface
+   for a specific type of hardware components, such as the camera or Bluetooth module, for example.
+   **When a framework API makes a call** to access device hardware, the Android system **loads** the library module for
+   that hardware component.
 
-6. **Linux kernel** - The foundation of the Android platform. Android relies on the Linux kernel for underlying functionalities 
-such as **threading** and **low-level memory management**. Linux kernel launch/fork a new process for every application, and every process 
-**holds a runtime** with a running application. Also, within the process, multiple threads can execute the application code. 
-The kernel splits the available CPU execution time for processes and their threads through _scheduling_.
-
+6. **Linux kernel** - The foundation of the Android platform. Android relies on the Linux kernel for underlying
+   functionalities such as **threading** and **low-level memory management**. Linux kernel launch/fork a new process for
+   every application, and every process
+   **holds a runtime** with a running application. Also, within the process, multiple threads can execute the
+   application code. The kernel splits the available CPU execution time for processes and their threads through _
+   scheduling_.
 
 ### [2] Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
+
 [//]: # (TODO https://medium.com/programming-lite/android-core-jvm-dvm-art-jit-aot-855039a9a8fa)
 
 ### [3] What is App Sandbox?
 
-Applications execute in different processes and Virtual Machines. 
-Each Android app lives in its own security sandbox. By default, every app runs in its own Linux process.
-Each process has its own virtual machine (VM).
+Applications execute in different processes and Virtual Machines. Each Android app lives in its own security sandbox. By
+default, every app runs in its own Linux process. Each process has its own virtual machine (VM).
 
 ![img.png](img/sandbox.png)
 
-Each process has its own virtual machine (VM), so an app's code runs in isolation from other apps. By default, every app runs in its own
-Linux process. The Android system starts the process when any of the app's components need to be executed, and then
-shuts down the process when it's no longer needed or when the system must recover memory for other apps.
+Each process has its own virtual machine (VM), so an app's code runs in isolation from other apps. By default, every app
+runs in its own Linux process. The Android system starts the process when any of the app's components need to be
+executed, and then shuts down the process when it's no longer needed or when the system must recover memory for other
+apps.
 
-By default, the system assigns each app a unique Linux user ID (the ID is used only by the system and is unknown to the app). The system sets
-permissions for all the files in an app so that only the user ID assigned to that app can access them. 
-The Android system implements the principle of least privilege. That is, each app, by default, has access only to the components
-that it requires to do its work and no more. This creates a very secure environment in which an app cannot access parts
-of the system for which it is not given permission. 
+By default, the system assigns each app a unique Linux user ID (the ID is used only by the system and is unknown to the
+app). The system sets permissions for all the files in an app so that only the user ID assigned to that app can access
+them. The Android system implements the principle of least privilege. That is, each app, by default, has access only to
+the components that it requires to do its work and no more. This creates a very secure environment in which an app
+cannot access parts of the system for which it is not given permission.
 
 To share data with other apps look [Inter Process Communication](#5-inter-process-communication-ipc)
 
-It's possible to arrange for two apps to share the same Linux user ID (AndroidManifest - sharedUserID), in which case they are able to access each
-other's files. To conserve system resources, apps with the same user ID can also arrange to run in the same Linux
-process and share the same VM. The apps must also be signed with the same certificate.
-
+It's possible to arrange for two apps to share the same Linux user ID (AndroidManifest - sharedUserID), in which case
+they are able to access each other's files. To conserve system resources, apps with the same user ID can also arrange to
+run in the same Linux process and share the same VM. The apps must also be signed with the same certificate.
 
 ### [4] Android build process
+
 [//]: # (TODO https://medium.com/androiddevnotes/the-internals-of-android-apk-build-process-article-5b68c385fb20)
 
 ### [5] Inter process communication (IPC)
 
 ### [6] How the application launch process works
-An application is launched when one of its components (Activity, Service, BroadcastReceiver, ContentProvider) is initiated to execute.
-Any component can be an entry point for an application, and as soon as the first component starts, the Linux process (if not already running) is started,
-which results in the following startup sequence:
+
+An application is launched when one of its components (Activity, Service, BroadcastReceiver, ContentProvider) is
+initiated to execute. Any component can be an entry point for an application, and as soon as the first component starts,
+the Linux process (if not already running) is started, which results in the following startup sequence:
 
 1. Linux process starts
 2. Android Runtime is created
 3. An instance of the Application class is created
 4. The application entry point component is created
 
-Setting up a new Linux process and runtime is not an instant operation. This may reduce
-performance and have a noticeable impact on the user experience. So the system tries
-reduce the startup time of Android applications by launching a special process called Zygote at system boot.
+Setting up a new Linux process and runtime is not an instant operation. This may reduce performance and have a
+noticeable impact on the user experience. So the system tries reduce the startup time of Android applications by
+launching a special process called Zygote at system boot.
 
 What does Zygote do? To answer this question, you need to understand how processes work.
 
 At the very early stage of loading the Linux OS (at the time of loading the kernel) the very first process is created -
-_swapper_ or _sched_ (a process with Process ID = 0).
-Each process can create new processes (child process), through the fork function. Fork involves the creation of a new process that is an exact copy of the parent process.
+_swapper_ or _sched_ (a process with Process ID = 0). Each process can create new processes (child process), through the
+fork function. Fork involves the creation of a new process that is an exact copy of the parent process.
 ![img.png](img/process_fork_2.png)
 
-Efficient and fast application launch is achieved by the fact that Zygote starts with a preload
-all classes and resources that the application may potentially need at runtime into system memory.
-When the application starts, it forks from the Zygote process. It is the parent for all Android applications.
+Efficient and fast application launch is achieved by the fact that Zygote starts with a preload all classes and
+resources that the application may potentially need at runtime into system memory. When the application starts, it forks
+from the Zygote process. It is the parent for all Android applications.
 
-Zygote comes pre-installed with the entire set of core libraries. New application processes are forked from the Zygote 
+Zygote comes pre-installed with the entire set of core libraries. New application processes are forked from the Zygote
 process without copying core libraries that are common to all applications.
 
-Fork involves the creation of a new process that is an exact copy of the parent process. It doesn't actually copy anything, instead
-it maps the resources of the new process to those of the parent process and makes copies only when the new process changes something.
+Fork involves the creation of a new process that is an exact copy of the parent process. It doesn't actually copy
+anything, instead it maps the resources of the new process to those of the parent process and makes copies only when the
+new process changes something.
 
 [Read more: Linux process lifecycle](https://www.okbsapr.ru/library/publications/kanner_2015_3/)
 
+### [7] What is process ranking?
+
+Android system uses Low Memory Killer Daemon (LMK) ([Link](https://source.android.com/docs/core/perf/lmkd)).
+
+Low Memory Killer Daemon - process monitors the memory state of a running Android system and reacts to high memory
+pressure by killing the least essential processes to keep the system performing at acceptable levels.
+
+Main reason for introduction of LMK in android was OOM (Out of Memory) killer sometimes kill high priority process
+(Like foreground applications) in low memory conditions, on the other hand LMK has interface (oom score value)
+with activity manager (framework part) which knows priority of processes this results LMK always kill hidden and empty
+applications before killing foreground and active applications.
+
+Process ranking:
+
+1. **Foreground process**
+
+   Application has a visible component in front, Service is bound to an Activity in front in a remote process or
+   BroadcastReceiver is running.
+2. **Visible Process**
+
+   Application has a visible component but is partly obscured.
+3. **Service Process**
+
+   Service is executing in the background and is not tied to a visible component.
+4. **Background process**
+
+   A nonvisible Activity. This is the process level that contains most applications.
+5. **Empty Process**
+
+   A process without active components. Empty processes are kept around to improve startup times, but they are the first
+   to be terminated when the system reclaims resources.
+
+The system can have multiple application processes running even while the user perceives them as terminated. 
+The empty processes are lingering (if system resources permit it) to shorten the startup time on restarts.
 
 
