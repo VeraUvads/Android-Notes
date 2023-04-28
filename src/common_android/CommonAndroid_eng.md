@@ -37,7 +37,8 @@ From the top:
    Android platform.
 
    Before Android version 5.0 (API level 21) it was Dalvik, but now its
-   ART ([Dalvik vs ART](#2-difference-between-dalvik-and-art--what-is-profile-guided-compilation)).
+   ART ([JVM vs Dalvik vs ART](#2-why-android-os-uses-dvm-instead-of-jvm-why-android-depreciated-dvm-and-started-to-use-art))
+   .
 
 5. **HAL (Hardware Abstraction Layer)** - provides standard interfaces that expose device hardware capabilities to the
    higher-level Java API Framework. The HAL consists of multiple library modules, each of which implements an interface
@@ -52,9 +53,56 @@ From the top:
    application code. The kernel splits the available CPU execution time for processes and their threads through _
    scheduling_.
 
-### [2] Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
+### [2] Why Android OS uses DVM instead of JVM? Why Android depreciated DVM and started to use ART?
 
-[//]: # (TODO https://medium.com/programming-lite/android-core-jvm-dvm-art-jit-aot-855039a9a8fa)
+**Java Virtual Machine vs Dalvik Virtual Machine:**
+
+- JVM is stack based but DVM is register based which is designed to run on low memory.
+- JVM uses java byte code and runs ‘.class’ file having JIT (Just in Time) where DVM uses its own byte code and runs
+  ‘.dex’ file.
+- In JVM, single instance is of JVM is shared with multiple applications where DVM has been designed so that the device
+  can run multiple instance of VM efficiently. Applications are given their own instance.
+- JVM support multiple operating system where DVM supports Android operating system only.
+- In JVM, the executable is JAR where in DVM the executable is APK.
+
+![img.png](img/jvm_vs_dvm.png)
+
+_Main reasons of using DVM in android is DVM takes less memory, runs and loads faster compared to JVM._
+
+**ART vs DVM**
+
+- **DVM uses JIT (Just in Time) compilation**
+
+  App is compiled every time when an app is launched.
+- **ART uses AOT (Ahead-of-Time) compilation.**
+
+  App complies only once. During the app’s installation phase, AOT ( Ahead-of-Time)
+  statically translates the DEX bytecode into machine code and stores in the device’s storage. This is a one-time event
+  and happens only when the app is installed on the device. This leads to better battery life and great performance. So
+  there’s no need for JIT compilation, and the code executes much faster.
+- **Garbage collector.**
+
+  One of the main reasons for a poor UX, poor responsiveness, and ultimately bad reviews. In the Dalvik days, GC used to
+  have two passes over the heap, which led to poor UXs. This situation is improved in ART, as only one pass over the
+  heap to consolidate the memory is
+  required. [Android GC work](#8-how-does-a-garbage-collector-work-which-garbage-collector-used-in-android)
+
+- ART _reduce startup time of applications_ and _improved battery performance_.
+
+  Drawbacks: _increase app installation time_ and (as the native machine code generated on installation is stored in
+  internal storage) _more internal storage is required_.
+
+To tackle these Drawbacks such as initial installation time and memory from Android Nougat JIT (Just In Time )
+Compilation was reintroduced with code profiling along with AOT, and an interpreter in the ART thus making it hybrid.
+Using the Hybrid Runtime, there won’t be any compilation during install, and applications can be started right away, the
+bytecode is interpreted. Now with ART and the new JIT the application installation is faster. The new JIT constantly
+does profiling and improves applications as they run.
+
+[Link1](https://medium.com/programming-lite/android-core-jvm-dvm-art-jit-aot-855039a9a8fa)
+
+[Link2](https://source.android.com/docs/core/runtime/configure)
+
+[Video](https://www.youtube.com/watch?v=0J1bm585UCc)
 
 ### [3] What is App Sandbox?
 
@@ -153,7 +201,10 @@ Process ranking:
    A process without active components. Empty processes are kept around to improve startup times, but they are the first
    to be terminated when the system reclaims resources.
 
-The system can have multiple application processes running even while the user perceives them as terminated. 
-The empty processes are lingering (if system resources permit it) to shorten the startup time on restarts.
+The system can have multiple application processes running even while the user perceives them as terminated. The empty
+processes are lingering (if system resources permit it) to shorten the startup time on restarts.
+
+### [8] How does a garbage collector work? Which garbage collector used in Android?
+
 
 
