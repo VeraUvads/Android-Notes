@@ -57,56 +57,80 @@ weak/strong references on objects.
 
 ***
 
-#### What is *Zygote* ?
-
-[//]: # (Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между )
-
-[//]: # (процессами. Это можно сделать следующими способами:)
+[//]: # (#### What is *Zygote* ?)
 
 [//]: # ()
-[//]: # ([TODO]&#40;https://developer.android.com/topic/performance/memory-overview&#41;)
+[//]: # ([//]: # &#40;Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между &#41;)
+[//]: # ()
+[//]: # ([//]: # &#40;процессами. Это можно сделать следующими способами:&#41;)
+[//]: # ()
+[//]: # ([//]: # &#40;&#41;)
+[//]: # ([//]: # &#40;[TODO]&#40;https://developer.android.com/topic/performance/memory-overview&#41;&#41;)
+[//]: # ()
+[//]: # (Каждое приложение запускается в отдельном процессе. Это сделано для того, чтобы процессы не могли иметь доступ к памяти друг друга, и следовательно,)
 
-Каждое приложение запускается в отдельном процессе. Это сделано для того, чтобы процессы не могли иметь доступ к памяти друг друга, и следовательно,
-никто не сможет получить доступ к нашим данным.
+[//]: # (никто не сможет получить доступ к нашим данным.)
 
-На самом раннем этапе загрузки ОС Linux, а именно, в момент загрузки ядра создается самый первый процесс — 
-swapper или sched (процесс имеющий Process ID = 0).
+[//]: # ()
+[//]: # (На самом раннем этапе загрузки ОС Linux, а именно, в момент загрузки ядра создается самый первый процесс — )
 
-Сами процессы в ходе своей жизни могут пребывать в следующих состояниях: 
-1) состояние выполнения (running)
-2) состояние сна (uninterruptible/interruptible sleep)
-3) состояние остановки выполнения (stopped)
-4) zombie-состояние
-![img.png](process_lifecycle.png)
+[//]: # (swapper или sched &#40;процесс имеющий Process ID = 0&#41;.)
 
-При этом в процессе выполнения каждый процесс может создавать новые процессы (child process), 
-по отношению к которым он будет предком-родителем, через fork/exec
-![img.png](process_fork_2.png)
+[//]: # ()
+[//]: # (Сами процессы в ходе своей жизни могут пребывать в следующих состояниях: )
 
+[//]: # (1&#41; состояние выполнения &#40;running&#41;)
 
-Zygote - специальный системный процесс, от которого мы запускаем процессы своего прложения.
-Zygote уже содержит все необходимое для функционирования нашего приложения.
-Через fork копируем родительский процесс, с отличным UID (User identifier).
-![img.png](process_fork.png)
+[//]: # (2&#41; состояние сна &#40;uninterruptible/interruptible sleep&#41;)
 
-[Link](https://www.okbsapr.ru/library/publications/kanner_2015_3/)
+[//]: # (3&#41; состояние остановки выполнения &#40;stopped&#41;)
+
+[//]: # (4&#41; zombie-состояние)
+
+[//]: # (![img.png]&#40;process_lifecycle.png&#41;)
+
+[//]: # ()
+[//]: # (При этом в процессе выполнения каждый процесс может создавать новые процессы &#40;child process&#41;, )
+
+[//]: # (по отношению к которым он будет предком-родителем, через fork/exec)
+
+[//]: # (![img.png]&#40;process_fork_2.png&#41;)
+
+[//]: # ()
+[//]: # ()
+[//]: # (Zygote - специальный системный процесс, от которого мы запускаем процессы своего прложения.)
+
+[//]: # (Zygote уже содержит все необходимое для функционирования нашего приложения.)
+
+[//]: # (Через fork копируем родительский процесс, с отличным UID &#40;User identifier&#41;.)
+
+[//]: # (![img.png]&#40;process_fork.png&#41;)
+
+[//]: # ()
+[//]: # ([Link]&#40;https://www.okbsapr.ru/library/publications/kanner_2015_3/&#41;)
 
 ***
 
-#### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?
+[//]: # (#### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?)
 
-Dalvik - JIT 
+[//]: # ()
+[//]: # (Dalvik - JIT )
 
-ART- AOT 
+[//]: # ()
+[//]: # (ART- AOT )
 
-JIT - takes less RAM, but runtime is much slower 
+[//]: # ()
+[//]: # (JIT - takes less RAM, but runtime is much slower )
 
-AOT - takes a lot of RAM, but runtime works is 20 time more efficient 
+[//]: # ()
+[//]: # (AOT - takes a lot of RAM, but runtime works is 20 time more efficient )
 
-Profile-Guided Compilation - JIT, but if application is frequently uses AOT
+[//]: # ()
+[//]: # (Profile-Guided Compilation - JIT, but if application is frequently uses AOT)
 
+[//]: # ()
 
-[Link](https://www.youtube.com/watch?v=0J1bm585UCc)
+[//]: # ([Link]&#40;https://www.youtube.com/watch?v=0J1bm585UCc&#41;)
 
 
 ***

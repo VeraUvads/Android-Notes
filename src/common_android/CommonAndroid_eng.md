@@ -206,5 +206,46 @@ processes are lingering (if system resources permit it) to shorten the startup t
 
 ### [8] How does a garbage collector work? Which garbage collector used in Android?
 
+### [9] Does increasing threads increase performance?
+
+**Introduction:**
+
+On the operating system level, the thread has both an instruction and a stack pointer. The instruction pointer
+references the next instruction to be processed, and the stack pointer references a private memory area —_not available
+to other threads_— where thread-local data is stored.
+
+A CPU can process instructions from _one thread at a time_, but a system normally has multiple threads that require
+processing at the same time. For the user to perceive that applications can run in parallel, the CPU has to share its
+processing time between the application threads. The sharing of a CPU’s processing time is handled by a _scheduler_.
+That determines what thread the CPU should process and for how long. The scheduling strategy can be implemented in
+various ways, but it is mainly based on the thread priority(from 1 to 10): a high-priority thread gets the CPU
+allocation before a low-priority thread, which gives more execution time to high-priority threads.
+
+A thread change is known as _context switch_. A context switch starts by storing the state of the executing thread so
+that the execution can be resumed at a later point, whereafter that thread has to wait. The scheduler then restores
+another waiting thread for processing.
+
+**Answer:**
+
+Our job will take longer to finish if we generate thousands of threads since we’ll have to spend time switching between
+their contexts. Too many threads might have two negative effects. First, when a fixed quantity of work is divided among
+too many threads, each thread receives so little work that the overhead associated with initiating and stopping threads
+overwhelms the productive work. Second, running an excessive number of threads results in overhead due to the way they
+compete for limited hardware resources.
+
+![img.png](img/thread_perfomance.png)
+
+
+[//]: # (### [9] Why can only the UI thread in Android update the UI?)
+
+[//]: # (https://developer.android.com/guide/components/processes-and-threads.html + Java Concurrency)
+
+[//]: # (### [9] Memory work)
+
+[//]: # (### [9] Why thread increasing not always increase )
+
+[//]: # (### [9] Handler, Looper, MessageQueue )
+
+
 
 
