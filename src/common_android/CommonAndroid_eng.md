@@ -235,6 +235,38 @@ compete for limited hardware resources.
 
 ![img.png](img/thread_perfomance.png)
 
+### [10] What is the difference between process and thread?
+
+A process is an instance of a program at runtime, an independent entity that is allocated system resources.
+(for example, CPU time and memory). Each process runs in a separate address space:
+one process cannot access the variables and data structures of another. If a process wants to access other process's
+resources, it must use inter-process communication.
+
+A thread uses the same stack space as a process, and multiple threads use their shared data. Generally, each thread can
+work (read and write) with the same area of memory, as opposed to processes that cannot simply access to the memory of
+another process. Each thread has its own registers and its own stack, but other threads can use them.
+
+A thread is a specific way of executing a process. When one thread modifies a process resource, this change is
+immediately visible to other threads in that process.
+
+![img.png](img/process_vs_thread.png)
+
+
+| Basis of comparison              | Process                                                                                                                                                                                                                                                                                                                                 | Flow                                                                                                                                                           |
+|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Definition                       | A process is a running program, i.e. an active program.                                                                                                                                                                                                                                                                                 | A thread is an entity within a process that can be scheduled to run (by scheduler).                                                                            |
+| Context switch                   | Processes take longer to context switch because they are heavier and require more actions. When switching the execution of a thread of one process to a thread of another, the OS updates some processor registers that are responsible for virtual memory mechanisms, since different processes have different virtual address spaces. | Threads take less time to switch contexts because there is less information to store, clean up, and restore because threads operate in the same address space. |
+| Sharing memory                   | Each process runs in a different address space: one process cannot access the variables and data structures of another.                                                                                                                                                                                                                 | All threads in a process share its virtual address space and system resources.                                                                                 |
+| Communication                    | Communication between processes takes more time than between threads. If a process wants to access other process's resources, it must use [interprocess communication](#11-inter-process-communication).                                                                                                                                | Communication between threads takes less time than between processes.                                                                                          |
+| Time of creation and termination | Processes take longer to create and complete. When the OS starts a program, it creates a process and creates a main thread to execute the program code. Also, when creating a process, memory is allocated, resources and libraries are loaded / copied.                                                                                | Thread is used in the same address space and does not require memory allocation and any loading.                                                               |
+
+
+![img_1.png](img/process_vs_thread_2.png)
+
+### [11] Inter Process Communication
+
+[//]: # (Thread is an execution unit that is part of a process.)
+
 
 [//]: # (### [9] Why can only the UI thread in Android update the UI?)
 
