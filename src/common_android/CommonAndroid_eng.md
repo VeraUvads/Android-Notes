@@ -261,7 +261,6 @@ immediately visible to other threads in that process.
 
 ![img_1.png](img/process_vs_thread_2.png)
 
-
 ### [11] What does thread scheduling depend on?
 
 Linux treats threads and not processes as the fundamental unit for execution. Hence, scheduling on Android concerns
@@ -302,6 +301,48 @@ mapping values in the table are from Jelly Bean.
 | 9                        | -6             |
 | 10 (Thread.MAX_PRIORITY) | -8             |
 
+### [12] What are Handler, Looper, MessageQueue for?
+
+There is only one thread that updates the UI. We use other threads to run multiple tasks in the background. To update
+the UI after execution, we need to send the result to the main or UI thread.
+
+It is difficult to manage communication with a large group of threads. Android provides API to make communication
+between threads easier.
+
+Components:
+
+- Looper
+- Message Queue
+- Handler
+- Message
+
+Looper is a kind of infinite loop that reads values from a queue and executes. It looks something like this:
+
+```Kotlin
+val queue: Queue<Runnable> = ArrayDeque()
+while (true) {
+    val runnable = queue.poll()
+    runnable?.run()
+}
+```
+
+In fact, Looper does not work with Queue<Runnable>, but with MessageQueue. In short, a MessageQueue is a queue with a
+list of tasks that will be executed on a specific thread. It is similar to Queue<Runnable> but is a class that works
+with Message objects.
+
+Message contains the _task execution time_, a _link to the next Message_, and the _Runnable_ , that Lopper should
+execute.
+
+To put a task in a Looper, you need a Handler.
+
+Handler - Consumer thread message processor, and the interface for a producer thread to insert messages into the queue.
+A Looper can have many associated handlers, but they all insert messages into the same queue.
+
+![img.png](img/handler.png)
+
+Only one Looper can be associated with a thread. Attaching another Looper to a Thread results in a RuntimeException.
+Looper is responsible for keeping the thread alive.
+
 
 [//]: # (### [9] Why can only the UI thread in Android update the UI?)
 
@@ -310,9 +351,8 @@ mapping values in the table are from Jelly Bean.
 [//]: # (### [9] Memory work)
 
 
-
-
 [//]: # (### [11] Inter Process Communication)
+
 [//]: # (Добавтить ссылку в 10 вопрос )
 
 

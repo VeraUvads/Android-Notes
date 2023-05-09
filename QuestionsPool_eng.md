@@ -11,8 +11,9 @@
 7) What is process ranking?
 8) How does a garbage collector work? Which garbage collector used in Android?
 9) Does increasing threads increase performance?
-10) What is the difference between process and thread? 
-11) What are Handler, Looper, MessageQueue for?
+10) What is the difference between _process_ and _thread_? 
+11) What does thread scheduling depend on?
+12) What are Handler, Looper, MessageQueue for?
 
 
 ### [Coroutines Theory](src/coroutines/eng/CoroutinesTheory_eng.md)
