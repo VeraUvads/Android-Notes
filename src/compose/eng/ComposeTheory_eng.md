@@ -18,7 +18,7 @@ the saved instance state mechanism (for example it happens when the screen is ro
 *remember { derivedStateOf(data) }* - similarly to *remember(key)*, but will recompose only if the result inside lambda
 changes
 
-***
+*** 
 
 #### 3) What is SideEffect for?
 
