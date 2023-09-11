@@ -369,7 +369,9 @@ At the beginning of a cold start, the system has the three following tasks:
 
 - Load and launch the app.
 - Display a blank starting window for the app immediately after launch.
-- Create the app process. As soon as the system creates the app process, the app process is responsible for the next
+- Create the app process. 
+
+As soon as the system creates the app process, the app process is responsible for the next
   stages:
 - Create the app object.
 - Launch the main thread.
