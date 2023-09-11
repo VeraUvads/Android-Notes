@@ -350,11 +350,77 @@ Looper is responsible for keeping the thread alive.
 
 [//]: # (### [9] Memory work)
 
-
 [//]: # (### [11] Inter Process Communication)
 
 [//]: # (Добавтить ссылку в 10 вопрос )
 
+### [13] Which app startup states exist?
+
+App launch can take place in one of three states: cold start, warm start, or hot start. . Each state affects how long it
+takes for your app to become visible to the user. Two important metrics for determining app startup are time to initial
+display (TTID) and time to fully drawn (TTFD). TTID is the time taken to display the first frame, and TTFD is the time
+taken for the app to become fully interactive. Both are equally important, as TTFD lets the user know that the app is
+loading, and TTFD is when the app is actually useable.
+
+![img.png](img/startup_types.png)
+
+**Cold start**
+At the beginning of a cold start, the system has the three following tasks:
+
+- Load and launch the app.
+- Display a blank starting window for the app immediately after launch.
+- Create the app process. As soon as the system creates the app process, the app process is responsible for the next
+  stages:
+- Create the app object.
+- Launch the main thread.
+- Create the main activity.
+- Inflate views.
+- Layout the screen.
+- Perform the initial draw.
+
+When the app process completes the first draw, the system process swaps out the displayed background window, replacing
+it with the main activity. At this point, the user can start using the app.
+![img.png](img/cold_app_launch.png)
+
+**Warm start**
+The user backs out of your app but then re-launches it. The process might continue to run, but the app must recreate the
+activity from scratch using a call to onCreate().
+
+**Hot start**
+If all of your app's activities are still resident in memory, then the app can avoid repeating object initialization,
+layout inflation, and rendering.
+However, if some memory is purged in response to memory trimming events, such as onTrimMemory(), then these objects need
+to be recreated in response to the hot start event.
+
+[Android vitals](#14-what-is-android-vitals) considers the following startup times for your app excessive:
+
+- Cold startup takes 5 seconds or longer.
+- Warm startup takes 2 seconds or longer.
+- Hot startup takes 1.5 seconds or longer.
+
+[Link](https://developer.android.com/topic/performance/vitals/launch-time)
+
+### [14] What is Android Vitals?
+Core metrics that affect the visibility of your app on Google Play. 
+
+Core vitals:
+
+- User-perceived ANR rate
+- User-perceived crash rate
+
+All other vitals:
+
+- Excessive wakeups
+- Stuck partial wake locks
+- Excessive background Wi-Fi scans
+- Excessive background network usage
+- [App startup time](#13-which-app-startup-states-exist)
+- Slow rendering
+- Frozen frames
+- Permission denials
+  - High denial rates suggest that users don't think the additional exposure of their information is worth the benefits offered in return.
+
+[Link](https://developer.android.com/topic/performance/vitals)
 
 
 

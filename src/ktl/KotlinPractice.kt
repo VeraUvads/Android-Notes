@@ -1,7 +1,23 @@
 package ktl
 
-
+val x = 1
+val list = mutableListOf<String>("dsds")
 fun main() {
+    println(list.map(::toInt))
+    println(list.map { toInt(it) })
+    println(x::dec)
+    println(::x.isOpen)
+}
+
+fun toInt(s: String): Int {
+    return s.toInt()
+}
+
+private fun foo() {
+
+}
+
+fun main2() {
     threadsDeadLock()
 }
 

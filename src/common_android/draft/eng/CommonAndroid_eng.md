@@ -18,8 +18,8 @@ hold on to the provided data for as long as the user can ever navigate back to t
 2) ContentProvider
 3) Messenger
 
-Messenger - клиент серверное взаимодействие. Процесс-клиент посылает данные на процесс-сервер.
-Работает с bindServices которые живут в другом процессе.
+Messenger - клиент серверное взаимодействие. Процесс-клиент посылает данные на процесс-сервер. Работает с bindServices
+которые живут в другом процессе.
 ![img.png](IPCmessenger.png)
 
 4) Socket-NDK
@@ -27,7 +27,6 @@ Messenger - клиент серверное взаимодействие. Про
 Все они под капотом используют Binder
 ![img.png](arch_kernel_level.png)
 ***
-
 
 #### What is the Binder transaction?
 
@@ -53,30 +52,59 @@ weak/strong references on objects.
 
 ***
 
-#### Как вырезать фигуру из вьюшки
+#### С какими проблемами можно столкнуться проводя работу в background
+
+- Система убьет процесс
+- DozeMode
+    - If a user leaves a device unplugged and stationary for a period of time, with the screen off, the device enters
+      Doze mode. In Doze mode, the system attempts to conserve battery by restricting apps' access to network and
+      CPU-intensive services. It also prevents apps from accessing the network and defers their jobs, syncs, and
+      standard alarms. Periodically, the system exits Doze for a brief time to let apps complete their deferred
+      activities. During this maintenance window, the system runs all pending syncs, jobs, and alarms, and lets apps
+      access the network. Over time, the system schedules maintenance windows less and less
+      frequently.![img.png](doze_mode_maintaince_windows.png) Firebase Cloud Messaging is optimized to work with Doze
+      and App Standby idle modes. FCM high priority messages let you reliably wake your app to engage the user. FCM
+      provides a single, persistent connection to the cloud; all apps needing real-time messaging can share this
+      connection. This shared connection significantly optimizes battery consumption by making it unnecessary for
+      multiple apps to maintain their own, separate persistent connections, which can deplete the battery rapidly. The
+      system provides a configurable list of apps that are partially exempt from Doze and App Standby optimizations. An
+      app can check whether it is currently on the exemption list by calling *isIgnoringBatteryOptimizations()*.
 
 ***
+
+### [13] What is Android Vitals?
+
 
 [//]: # (#### What is *Zygote* ?)
 
 [//]: # ()
+
 [//]: # ([//]: # &#40;Чтобы разместить все необходимое в оперативной памяти, Android пытается разделить страницы оперативной памяти между &#41;)
+
 [//]: # ()
+
 [//]: # ([//]: # &#40;процессами. Это можно сделать следующими способами:&#41;)
+
 [//]: # ()
+
 [//]: # ([//]: # &#40;&#41;)
+
 [//]: # ([//]: # &#40;[TODO]&#40;https://developer.android.com/topic/performance/memory-overview&#41;&#41;)
+
 [//]: # ()
+
 [//]: # (Каждое приложение запускается в отдельном процессе. Это сделано для того, чтобы процессы не могли иметь доступ к памяти друг друга, и следовательно,)
 
 [//]: # (никто не сможет получить доступ к нашим данным.)
 
 [//]: # ()
+
 [//]: # (На самом раннем этапе загрузки ОС Linux, а именно, в момент загрузки ядра создается самый первый процесс — )
 
 [//]: # (swapper или sched &#40;процесс имеющий Process ID = 0&#41;.)
 
 [//]: # ()
+
 [//]: # (Сами процессы в ходе своей жизни могут пребывать в следующих состояниях: )
 
 [//]: # (1&#41; состояние выполнения &#40;running&#41;)
@@ -90,6 +118,7 @@ weak/strong references on objects.
 [//]: # (![img.png]&#40;process_lifecycle.png&#41;)
 
 [//]: # ()
+
 [//]: # (При этом в процессе выполнения каждый процесс может создавать новые процессы &#40;child process&#41;, )
 
 [//]: # (по отношению к которым он будет предком-родителем, через fork/exec)
@@ -97,7 +126,9 @@ weak/strong references on objects.
 [//]: # (![img.png]&#40;process_fork_2.png&#41;)
 
 [//]: # ()
+
 [//]: # ()
+
 [//]: # (Zygote - специальный системный процесс, от которого мы запускаем процессы своего прложения.)
 
 [//]: # (Zygote уже содержит все необходимое для функционирования нашего приложения.)
@@ -107,6 +138,7 @@ weak/strong references on objects.
 [//]: # (![img.png]&#40;process_fork.png&#41;)
 
 [//]: # ()
+
 [//]: # ([Link]&#40;https://www.okbsapr.ru/library/publications/kanner_2015_3/&#41;)
 
 ***
@@ -114,18 +146,23 @@ weak/strong references on objects.
 [//]: # (#### Difference between *Dalvik* and *ART* ? What is Profile-Guided Compilation?)
 
 [//]: # ()
+
 [//]: # (Dalvik - JIT )
 
 [//]: # ()
+
 [//]: # (ART- AOT )
 
 [//]: # ()
+
 [//]: # (JIT - takes less RAM, but runtime is much slower )
 
 [//]: # ()
+
 [//]: # (AOT - takes a lot of RAM, but runtime works is 20 time more efficient )
 
 [//]: # ()
+
 [//]: # (Profile-Guided Compilation - JIT, but if application is frequently uses AOT)
 
 [//]: # ()
@@ -142,33 +179,26 @@ Content provider ??
 ***
 
 #### Что такое Context? Чем они отличаются друг от друга?
+
 [Link](https://www.fandroid.info/context-kontekst-v-android-chto-eto-kak-poluchit-i-zachem-ispolzovat/)
 
 ***
 
 #### Приоритеты процессов
 
--Foreground process 
-Visible Process 
-Service Process 
-Background process 
-Empty Process
+-Foreground process Visible Process Service Process Background process Empty Process
 
 1.Процесс с которым взаимодействует пользователь(Foreground process)
-К таким процессам относится например: активити с которым взаимодействует пользовать; 
-сервис(экземпляр Service), с которым взаимодействует пользователь; сервис запущенный методом startForeground(); 
-сервис, который выполняет один из методов своего жизненного цикла; 
-BroadcastReceiver который выполняет метод onReceive().
+К таким процессам относится например: активити с которым взаимодействует пользовать; сервис(экземпляр Service), с
+которым взаимодействует пользователь; сервис запущенный методом startForeground(); сервис, который выполняет один из
+методов своего жизненного цикла; BroadcastReceiver который выполняет метод onReceive().
 
-2.Видимый процесс
-Процесс, в котором не выполнены условия из пункта №1, но который влияет на то, что пользователь видит на экране. 
-К примеру, вызван метод onPause() активити.
+2.Видимый процесс Процесс, в котором не выполнены условия из пункта №1, но который влияет на то, что пользователь видит
+на экране. К примеру, вызван метод onPause() активити.
 
-3.Сервисный процесс
-Служба запущенная методом startService()
+3.Сервисный процесс Служба запущенная методом startService()
 
-4.Фоновый процесс
-Процесс выполняемый в фоновом режиме, который не виден пользователю.
+4.Фоновый процесс Процесс выполняемый в фоновом режиме, который не виден пользователю.
 
 5.Пустой процесс
 
@@ -176,7 +206,7 @@ BroadcastReceiver который выполняет метод onReceive().
 
 #### Мы обновили приложение, хранили Serializable и Parcelable. Добавили новое поле, как поддержать изменение?
 
-Parcelable: переопределить writeToParcel 
+Parcelable: переопределить writeToParcel
 
 Serializable: переопределить serialVersionUID -> Позволит выбросить ошибку
 
@@ -311,6 +341,7 @@ killing foreground and active applications, apart from this some differences are
 ***
 
 ###### Расскажите подробнее про Dalvik GC
+
 Освобождение памяти проходит в 4 этапа:
 
 1) Сборщик мусора приостанавливает все потоки в системе, чтобы найти все объекты доступные от root. Это требует времени,
@@ -385,6 +416,7 @@ Dalvik позволил процессу увеличиваться только
 ***
 
 #### Что такое процесс в Android
+
 [Link](https://habr.com/ru/post/124484/)  TODO
 
 ***
@@ -431,7 +463,6 @@ AOT - takes a lot of RAM, but runtime works is 20 time more efficient
 
 Profile-Guided Compilation - JIT, but if application is frequently uses AOT
 
-
 [Link](https://www.youtube.com/watch?v=0J1bm585UCc)
 
 ***
@@ -445,7 +476,8 @@ terminated.
 
 *Bound Service* - service that runs only if the component it is bound to is still active.
 
-#### Жизненный цикл сервисов 
+#### Жизненный цикл сервисов
+
 ![img.png](service_lifecycle.png)
 
 #### Отличие IntentService, Service, JobIntentService, JobService
@@ -453,9 +485,8 @@ terminated.
 *Service* — это компонент приложения, представляющий либо желание приложения выполнять длительную операцию, не
 взаимодействуя с пользователем, либо предоставлять функциональные возможности для использования другими приложениями.
 
-*Job Service* — Это базовый класс, который обрабатывает асинхронные запросы, запланированные ранее через *JobScheduler*. 
+*Job Service* — Это базовый класс, который обрабатывает асинхронные запросы, запланированные ранее через *JobScheduler*.
 Вы несете ответственность за переопределение *onStartJob* и за выведение выполнения задачи из основного потока.
-
 
 *IntentService* — это базовый класс для сервисов, которые обрабатывают асинхронные запросы. Принимает запросы через
 startService(Intent); служба запускается по мере необходимости, обрабатывает каждую задачу по очереди, используя рабочий
@@ -463,13 +494,14 @@ startService(Intent); служба запускается по мере необ
 onHandleIntent* тоже остановится.
 
 *JobIntentService* — В отличии от IntentService является частью Androidx и обязует переопределить не
-*onHandleIntent*, а *onHandleWork*. Запустить можно через *enqueue work* передав *jobId*. После того, как приложение было
-уничтожено, через несколько секунд цикл внутри *onHandleWork* начинает выполняться заново.
+*onHandleIntent*, а *onHandleWork*. Запустить можно через *enqueue work* передав *jobId*. После того, как приложение
+было уничтожено, через несколько секунд цикл внутри *onHandleWork* начинает выполняться заново.
 
 // TODO
 ![img.png](async_work.png)
 
 #### Content resolver, Content Provider
+
 ![img.png](content_provider.png)
 
 ContentResolver --> ContentProvider --> SQLiteDatabase
@@ -477,80 +509,93 @@ ContentResolver --> ContentProvider --> SQLiteDatabase
 *ContentProvider* предоставляет личные данные вашего приложения внешнему приложению, в то время как
 *ContentResolver* предоставляет правильный *ContentProvider* среди всех *ContentProviders*, используя URI.
 
+*ContentProvider* и *ContentResolver* являются частью **android.content** пакета. Эти два класса работают вместе, чтобы
+обеспечить надежную и безопасную модель обмена данными между приложениями.
 
-*ContentProvider* и *ContentResolver* являются частью **android.content** пакета. Эти два класса работают вместе, 
-чтобы обеспечить надежную и безопасную модель обмена данными между приложениями.
+*ContentProvider* предоставляет данные, хранящиеся в базе данных SQLite, другому приложению, не сообщая им о базовой
+реализации вашей базы данных. Таким образом, он абстрагирует SQliteDatabase.
 
-*ContentProvider* предоставляет данные, хранящиеся в базе данных SQLite, другому приложению, не сообщая им о 
-базовой реализации вашей базы данных. Таким образом, он абстрагирует SQliteDatabase.
-
-Но внешнее приложение не может напрямую обращаться к *ContentProvider*. Для этого мы взаимодействуем с 
-*ContentResolver*. Существует только один его экземпляр, и все ContentProviders вашего устройства 
-зарегистрированы с помощью простого URI пространства имен. Если вы хотите связаться с конкретным ContentProvider, вам просто нужно знать его URI. 
-Передайте его ContentResolver, и он найдет провайдера, используя URI.
+Но внешнее приложение не может напрямую обращаться к *ContentProvider*. Для этого мы взаимодействуем с
+*ContentResolver*. Существует только один его экземпляр, и все ContentProviders вашего устройства зарегистрированы с
+помощью простого URI пространства имен. Если вы хотите связаться с конкретным ContentProvider, вам просто нужно знать
+его URI. Передайте его ContentResolver, и он найдет провайдера, используя URI.
 
 ```
 content://com.android.contacts/contacts/3
 ```
 
-*content://* -  называется схемой и указывает, что это ContentUri.
+*content://* - называется схемой и указывает, что это ContentUri.
 
-*com.android.contacts* - называется *Content authority*, и ContentResolver использует его для разрешения уникального поставщика (в данном случае ContactProvider).
+*com.android.contacts* - называется *Content authority*, и ContentResolver использует его для разрешения уникального
+поставщика (в данном случае ContactProvider).
 
 *contacts* — это путь , который идентифицирует некоторое подмножество данных провайдера (например, имя таблицы).
 
 *3* — это идентификатор , используемый для уникальной идентификации строки в подмножестве данных.
 
-Вы не можете создать свой собственный класс ContentResolver, но вы всегда можете создать свой собственный класс ContentProvider.
+Вы не можете создать свой собственный класс ContentResolver, но вы всегда можете создать свой собственный класс
+ContentProvider.
 
 #### Что такое PendingIntent? Если создать два Pending Intent отличные только по данным помещенным в data, с какой ошибкой можно столкнуться?
-Позволяет сторонним приложениям запускать компоненты приложения, которое предоставило PendingIntent.
-Предоставляя PendingIntent другому приложению, вы предоставляете ему право выполнять указанную вами операцию, как если бы это другое приложение было вами (с теми же разрешениями и идентификатором).
 
-Сам PendingIntent — это просто ссылка на токен, поддерживаемый системой, описывающий исходные данные, 
-используемые для его извлечения. Это означает, что даже если процесс приложения-владельца будет уничтожен, 
-сам PendingIntent останется доступным для использования другими процессами, которые ему передали. 
-Если создающее приложение позже повторно извлечет PendingIntent того же типа (та же операция, тот же Intent, данные, категории и компоненты и те же флаги), 
-оно получит PendingIntent, представляющий тот же токен, если он все еще действителен.
+Позволяет сторонним приложениям запускать компоненты приложения, которое предоставило PendingIntent. Предоставляя
+PendingIntent другому приложению, вы предоставляете ему право выполнять указанную вами операцию, как если бы это другое
+приложение было вами (с теми же разрешениями и идентификатором).
 
-Из-за такого поведения важно знать, когда два Intent считаются одинаковыми для получения PendingIntent. 
-Распространенной ошибкой является создание нескольких объектов PendingIntent с Intent, которые различаются только своим "дополнительным» содержимым" (data), 
-ожидая каждый раз получать разные PendingIntent. Этого не происходит. Части Intent, которые используются для сопоставления, — это те же части, которые определены в Intent.filterEquals. 
-Если вы используете два объекта Intent, которые эквивалентны согласно Intent.filterEquals, вы получите один и тот же PendingIntent для обоих из них.
+Сам PendingIntent — это просто ссылка на токен, поддерживаемый системой, описывающий исходные данные, используемые для
+его извлечения. Это означает, что даже если процесс приложения-владельца будет уничтожен, сам PendingIntent останется
+доступным для использования другими процессами, которые ему передали. Если создающее приложение позже повторно извлечет
+PendingIntent того же типа (та же операция, тот же Intent, данные, категории и компоненты и те же флаги), оно получит
+PendingIntent, представляющий тот же токен, если он все еще действителен.
+
+Из-за такого поведения важно знать, когда два Intent считаются одинаковыми для получения PendingIntent. Распространенной
+ошибкой является создание нескольких объектов PendingIntent с Intent, которые различаются только своим "дополнительным»
+содержимым" (data), ожидая каждый раз получать разные PendingIntent. Этого не происходит. Части Intent, которые
+используются для сопоставления, — это те же части, которые определены в Intent.filterEquals. Если вы используете два
+объекта Intent, которые эквивалентны согласно Intent.filterEquals, вы получите один и тот же PendingIntent для обоих из
+них.
 
 Способы справиться с этим нужно использовать флаги *FLAG_CANCEL_CURRENT* или *FLAG_UPDATE_CURRENT*
 
-При создании изменяемого PendingIntent ВСЕГДА явно указывайте компонент, который будет запускаться в файле Intent. 
-Это можно сделать явно указав точный класс, который его получит, но это также можно сделать, вызвав Intent.setComponent().
+При создании изменяемого PendingIntent ВСЕГДА явно указывайте компонент, который будет запускаться в файле Intent. Это
+можно сделать явно указав точный класс, который его получит, но это также можно сделать, вызвав Intent.setComponent().
 
-*FLAG_IMMUTABLE* - указывает, что намерение внутри PendingIntent не может быть изменено другими приложениями,
-которые передают PendingIntent.send(). Приложение всегда может использовать FLAG_UPDATE_CURRENT для изменения своих собственных PendingIntents.
+*FLAG_IMMUTABLE* - указывает, что намерение внутри PendingIntent не может быть изменено другими приложениями, которые
+передают PendingIntent.send(). Приложение всегда может использовать FLAG_UPDATE_CURRENT для изменения своих собственных
+PendingIntents.
 
-*FLAG_MUTABLE* - указывает, что Intent внутри Pending Intent должен позволять приложению обновлять его содержимое путем слияния значений из параметра Intent в PendingIntent.send().
+*FLAG_MUTABLE* - указывает, что Intent внутри Pending Intent должен позволять приложению обновлять его содержимое путем
+слияния значений из параметра Intent в PendingIntent.send().
 
 В версиях Android до Android 6 (API 23) PendingIntents всегда изменяемы.
 
-*FLAG_ONE_SHOT* - позволяет отправлять PendingIntent только один раз. Это нужно чтобы приложение не выполняло какое-либо действие несколько раз.
+*FLAG_ONE_SHOT* - позволяет отправлять PendingIntent только один раз. Это нужно чтобы приложение не выполняло какое-либо
+действие несколько раз.
 
-*FLAG_CANCEL_CURRENT* - отменяет существующий PendingIntent, если он существует, перед регистрацией нового. 
-Это может быть важно, если конкретный объект PendingIntent был отправлен в одно приложение, а вы хотите отправить его в другое приложение, 
-потенциально обновив данные. Тогда первое приложение больше не сможет использовать предыдущий PendingIntent, но второе приложение сможет.
+*FLAG_CANCEL_CURRENT* - отменяет существующий PendingIntent, если он существует, перед регистрацией нового. Это может
+быть важно, если конкретный объект PendingIntent был отправлен в одно приложение, а вы хотите отправить его в другое
+приложение, потенциально обновив данные. Тогда первое приложение больше не сможет использовать предыдущий PendingIntent,
+но второе приложение сможет.
 
 #### Когда можно сохранять state чтобы гарантированно восстановить его даже в случае если андроид убьёт приложение?
+
 [Link](https://developer.android.com/reference/android/app/Activity.html?hl=de#onDestroy%28%29)
-Хорошая практика - сохранять данные на onPause(), поскольку не гарантируется, что onDestroy() будет всегда вызван, 
-а onPause() вызовется, когда приложение потеряет фокус.
+Хорошая практика - сохранять данные на onPause(), поскольку не гарантируется, что onDestroy() будет всегда вызван, а
+onPause() вызовется, когда приложение потеряет фокус.
 
-Не стоит использовать *onDestroy*. Он может быть вызван либо из-за того, что activity завершается (вызов finish()), либо из-за того, что система временно 
-уничтожает этот экземпляр действия для экономии места. Можно различить эти два сценария с помощью isFinishing() метода.
+Не стоит использовать *onDestroy*. Он может быть вызван либо из-за того, что activity завершается (вызов finish()), либо
+из-за того, что система временно уничтожает этот экземпляр действия для экономии места. Можно различить эти два сценария
+с помощью isFinishing() метода.
 
-Можно также использовать onSaveInstanceState и  onRestoreInstanceState, но они вызываются только при уничтожении конкретной Activity из-за нехватки памяти.
-
+Можно также использовать onSaveInstanceState и onRestoreInstanceState, но они вызываются только при уничтожении
+конкретной Activity из-за нехватки памяти.
 
 #### Launch mode
+
 [Link](https://medium.com/android-news/android-activity-launch-mode-e0df1aa72242)
 
-#### История версий 
+#### История версий
+
 [Link](https://habr.com/ru/company/tinkoff/blog/686614/)
 
 
