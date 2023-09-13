@@ -425,4 +425,6 @@ All other vitals:
 [Link](https://developer.android.com/topic/performance/vitals)
 
 
+### [15] Which API should we use if we want to save data in the application?
+![img.png](img/data_api_decision_tree.jpeg)
 
