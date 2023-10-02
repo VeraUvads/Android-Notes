@@ -1,9 +1,14 @@
 package coroutines
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import utils.Activity
+import java.lang.RuntimeException
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 // Answers here ( https://github.com/VeraUvads/Android-Notes/blob/18127f03c878f8717f844c4809e0308fd192c7b6/src/coroutines/eng/CoroutinesPracticeAnswers_eng.md )
 // Ответы по ссылке  ( https://github.com/VeraUvads/Android-Notes/blob/18127f03c878f8717f844c4809e0308fd192c7b6/src/coroutines/ru/CoroutinesPracticeAnswers_ru.md )
@@ -15,6 +20,7 @@ class Dispatcher1 {
     init {
         start(Dispatchers.Default)
         start(Dispatchers.IO)
+        EmptyCoroutineContext
         start(Executors.newSingleThreadExecutor().asCoroutineDispatcher())
     }
 
@@ -59,9 +65,8 @@ class Deferred1 {
 
 }
 
-fun main() {
-    Deferred1()
-}
+suspend fun main() = massiveRun()
+
 
 /**3) Fix the code **/
 /**3) Исправьте код **/
@@ -70,7 +75,7 @@ class Lifecycle1 {
         MainActivity()
     }
 
-    internal class MainActivity: Activity() {
+    internal class MainActivity : Activity() {
         private val viewModel = ViewModel()
 
         override fun onCreate() {
@@ -92,3 +97,36 @@ class Lifecycle1 {
 
 /**4) Write code with coroutines deadlock **/
 /**4) Напишите код который приведет к deadlock **/
+
+/**5) What will be printed? **/
+
+suspend fun exceptionHandling1() = coroutineScope {
+    val job = launch(SupervisorJob()) {
+        val child1 = launch {
+            delay(1000L)
+            println("child 1")
+            throw RuntimeException()
+        }
+        val child2 = launch {
+            delay(2000L)
+            println("child 2")
+        }
+        joinAll(child1, child2)
+    }
+    job.join()
+}
+
+
+/**6) How can we solve problem with consistent result? **/
+
+suspend fun massiveRun() {
+    var counter = 0
+    withContext(Dispatchers.Default) {
+        repeat(1000) {
+            launch {
+                counter++;
+            }
+        }
+    }
+    println(counter)
+}

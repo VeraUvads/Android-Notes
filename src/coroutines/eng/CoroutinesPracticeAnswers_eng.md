@@ -55,6 +55,7 @@ There are two mistakes.
  ```
 
 #### 4) Deadlock with coroutine
+
 Many ways, two of them:
 
  ```Kotlin
@@ -90,3 +91,63 @@ fun coroutinesDeadlock2() {
 }
  ```
 
+5) What will be printed?
+    1. Child 1
+    2. Error stacktrace
+
+"Child 2" will never be printed, because SupervisorJob works only for child coroutines; Is we want not to cancel our
+second Job we should use the supervisor job as shared;
+
+ ```Kotlin
+   val sharedJob = SupervisorJob()
+launch {
+    val child1 = launch(sharedJob) {
+        delay(1000L)
+        println("child 1")
+        throw RuntimeException()
+    }
+    val child2 = launch(sharedJob) {
+        delay(2000L)
+        println("child 2")
+    }
+    child1.join()
+    child2.join()
+}.join()
+ ```
+
+or
+
+ ```Kotlin
+suspend fun exceptionHandling() = coroutineScope {
+    supervisorScope {
+        launch {
+            delay(1000L)
+            println("child 1")
+            throw RuntimeException()
+        }
+        launch {
+            delay(2000L)
+            println("child 2")
+        }
+    }
+}
+ ```
+
+6) How can we solve problem with consistent result?
+
+ ```Kotlin
+suspend fun massiveRunAnswer() {
+    var counter = 0
+    val mutex = Mutex()
+    withContext(Dispatchers.Default) {
+        repeat(1000) {
+            launch {
+                mutex.withLock {
+                    counter++
+                }
+            }
+        }
+    }
+    println(counter)
+}
+ ```

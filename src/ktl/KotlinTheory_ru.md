@@ -56,9 +56,9 @@ fun variance() {
     var fruitList: ArrayList<Fruit> = arrayListOf<Fruit>()
 //    Мы не сможем присвоить переменную как список другого типа.
 //    Это называется ИНВАРИАНТНОСТЬ
-//    fruitList = orangeList // forbidden
-//    orangeList = fruitList // forbidden
-    
+    fruitList = orangeList // forbidden
+    orangeList = fruitList // forbidden
+
 }
 ```
 

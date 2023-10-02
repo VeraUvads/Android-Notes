@@ -1,8 +1,12 @@
 package ktl
 
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
+
 val x = 1
 val list = mutableListOf<String>("dsds")
 fun main() {
+    list.toList()
     println(list.map(::toInt))
     println(list.map { toInt(it) })
     println(x::dec)
@@ -14,7 +18,10 @@ fun toInt(s: String): Int {
 }
 
 private fun foo() {
+    val lock = ReentrantLock()
+    lock.withLock {
 
+    }
 }
 
 fun main2() {

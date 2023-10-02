@@ -10,6 +10,8 @@
 
 #### Contravariance, covariance, invariance
 
+#### Why we should prefer list to array?
+
 #### Difference between Nothing, Unit and Any
 
 #### What are *delegates*?
