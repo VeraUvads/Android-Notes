@@ -1,6 +1,9 @@
 package coroutines
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import utils.Activity
@@ -65,7 +68,7 @@ class Deferred1 {
 
 }
 
-suspend fun main() = massiveRun()
+suspend fun main() = sharedFlow()
 
 
 /**3) Fix the code **/
@@ -129,4 +132,21 @@ suspend fun massiveRun() {
         }
     }
     println(counter)
+}
+
+/**7) How can I modify the code to receive the previous 5 values after subscribing?**/
+
+suspend fun sharedFlow(): Unit = coroutineScope {
+    val flow = flow {
+        repeat(10) {
+            delay(1000L)
+            emit(it)
+        }
+    }
+    delay(6000)
+    launch {
+        flow.collect {
+            println(it)
+        }
+    }
 }

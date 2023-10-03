@@ -100,19 +100,19 @@ second Job we should use the supervisor job as shared;
 
  ```Kotlin
    val sharedJob = SupervisorJob()
-   launch {
-       val child1 = launch(sharedJob) {
-           delay(1000L)
-           println("child 1")
-           throw RuntimeException()
-       }
-       val child2 = launch(sharedJob) {
-           delay(2000L)
-           println("child 2")
-       }
-       child1.join()
-       child2.join()
-   }.join()
+launch {
+    val child1 = launch(sharedJob) {
+        delay(1000L)
+        println("child 1")
+        throw RuntimeException()
+    }
+    val child2 = launch(sharedJob) {
+        delay(2000L)
+        println("child 2")
+    }
+    child1.join()
+    child2.join()
+}.join()
  ```
 
 or
@@ -121,7 +121,7 @@ or
 suspend fun exceptionHandling() = coroutineScope {
     supervisorScope {
         launch {
-            delay(1000L) 
+            delay(1000L)
             println("child 1")
             throw RuntimeException()
         }
@@ -130,5 +130,24 @@ suspend fun exceptionHandling() = coroutineScope {
             println("child 2")
         }
     }
+}
+ ```
+
+6) How can we solve problem with consistent result?
+
+ ```Kotlin
+suspend fun massiveRunAnswer() {
+    var counter = 0
+    val mutex = Mutex()
+    withContext(Dispatchers.Default) {
+        repeat(1000) {
+            launch {
+                mutex.withLock {
+                    counter++
+                }
+            }
+        }
+    }
+    println(counter)
 }
  ```

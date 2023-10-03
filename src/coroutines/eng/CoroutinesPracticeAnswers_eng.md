@@ -151,3 +151,28 @@ suspend fun massiveRunAnswer() {
     println(counter)
 }
  ```
+
+7) How can I modify the code to receive the previous 5 values after subscribing?
+
+Flow is a cold stream. We can convert it to a hot stream using _.stateIn_ or _.shareIn_;
+_stateIn_ will return a _StateFlow_ and can emit only one previous value, while _shareIn_ will return a _SharedFlow_. we
+can define replay policy
+
+```Kotlin
+
+suspend fun sharedFlow(): Unit = coroutineScope {
+    val flow = flow {
+        repeat(10) {
+            delay(1000L)
+            emit(it)
+        }
+    }.shareIn(scope = this, replay = 5, started = SharingStarted.Eargely)
+    delay(6000)
+    launch {
+        flow.collect {
+            println(it)
+        }
+    }
+}
+
+```
